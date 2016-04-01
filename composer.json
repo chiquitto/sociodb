@@ -1,0 +1,26 @@
+{
+    "name": "chiquitto/ibgesql",
+    "description": "Dados do IBGE disponibilizados em formato SQL",
+    "authors": [
+        {
+            "name": "Alisson G. Chiquitto",
+            "email": "chiquitto@gmail.com",
+            "homepage": "http://chiquitto.com.br/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "league/climate": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chiquitto\\IBGESql\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Chiquitto\\IBGESql\\Tests\\": "tests/"
+        }
+    }
+}
