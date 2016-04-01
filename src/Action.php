@@ -9,12 +9,19 @@ namespace Chiquitto\IBGESql;
  */
 class Action
 {
-    const ACTION_CONFIG_BD = 'bd-config';
+    const ACTION_BD_CONFIG = 'bd-config';
+    const ACTION_BD_PREPARE = 'bd-prepare';
     const ACTION_HELP = 'help';
 
     private static $actionClass = [
-        self::ACTION_CONFIG_BD => 'Bd\\Config',
+        self::ACTION_BD_CONFIG => 'Bd\\Config',
+        self::ACTION_BD_PREPARE => 'Bd\\Prepare',
         self::ACTION_HELP => 'help',
+    ];
+    
+    private static $actionDescription = [
+        self::ACTION_BD_CONFIG => 'Configurar a conexão com o BD',
+        self::ACTION_BD_PREPARE => 'Criar as tabelas no BD',
     ];
     
     public static function getActionClass($actionName)
@@ -23,5 +30,13 @@ class Action
             return null;
         }
         return __NAMESPACE__ . '\\Action\\' . self::$actionClass[$actionName];
+    }
+    
+    public static function getActionDescription($actionName)
+    {
+        if (!isset(self::$actionDescription[$actionName])) {
+            return null;
+        }
+        return self::$actionDescription[$actionName];
     }
 }

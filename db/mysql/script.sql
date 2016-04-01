@@ -1,28 +1,49 @@
 CREATE TABLE IF NOT EXISTS `tbibgeuf` (
-  `cdUf` INT NOT NULL,
+  `cdUf` INT UNSIGNED NOT NULL,
   `stSigla` CHAR(2) NOT NULL,
   `stUf` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`cdUf`))
 ENGINE = InnoDB;
 
---separator
+-- separator
 
-CREATE TABLE IF NOT EXISTS `tbibgemicroregiao` (
-  `cdUf` INT NOT NULL,
-  `cdMesoregiao` INT NOT NULL,
-  `cdMicroregiao` INT NOT NULL,
-  `stMicroregiao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`cdUf`, `cdMicroregiao`))
+CREATE TABLE IF NOT EXISTS `tbibgemesoregiao` (
+  `cdUf` INT UNSIGNED NOT NULL,
+  `cdMesoregiao` INT UNSIGNED NOT NULL,
+  `stMesoregiao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`cdUf`, `cdMesoregiao`),
+  CONSTRAINT `fk_tbibgemesoregiao_tbibgeuf1`
+    FOREIGN KEY (`cdUf`)
+    REFERENCES `tbibgeuf` (`cdUf`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
---separator
+-- separator
+
+CREATE TABLE IF NOT EXISTS `tbibgemicroregiao` (
+  `cdUf` INT UNSIGNED NOT NULL,
+  `cdMesoregiao` INT UNSIGNED NOT NULL,
+  `cdMicroregiao` INT UNSIGNED NOT NULL,
+  `stMicroregiao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`cdUf`, `cdMicroregiao`),
+  INDEX `tbibgemicroregiao_cdMigroregiao` (`cdMicroregiao` ASC),
+  INDEX `fk_tbibgemicroregiao_tbibgemesoregiao1_idx` (`cdUf` ASC, `cdMesoregiao` ASC),
+  CONSTRAINT `fk_tbibgemicroregiao_tbibgemesoregiao1`
+    FOREIGN KEY (`cdUf` , `cdMesoregiao`)
+    REFERENCES `tbibgemesoregiao` (`cdUf` , `cdMesoregiao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `tbibgemunicipio` (
-  `cdUf` INT NOT NULL,
-  `cdMunicipio` INT NOT NULL COMMENT 'com DV',
-  `cdMicroregiao` INT NOT NULL,
+  `cdUf` INT UNSIGNED NOT NULL,
+  `cdMunicipio` INT UNSIGNED NOT NULL COMMENT 'com DV',
+  `cdMicroregiao` INT UNSIGNED NOT NULL,
   `stMunicipio` VARCHAR(45) NOT NULL,
-  `cdMunicipioCompleto` INT NOT NULL,
+  `cdMunicipioCompleto` INT UNSIGNED NOT NULL,
   `qtPopulacao` INT NULL,
   `vlRendimentoMedioMensalUrbano` DECIMAL(10,2) NULL,
   `vlPib` DECIMAL(10,2) NULL,
@@ -43,31 +64,12 @@ CREATE TABLE IF NOT EXISTS `tbibgemunicipio` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
---separator
-
-CREATE TABLE IF NOT EXISTS `tbibgemesoregiao` (
-  `cdUf` INT NOT NULL,
-  `cdMesoregiao` INT NOT NULL,
-  `stMesoregiao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`cdUf`, `cdMesoregiao`),
-  CONSTRAINT `fk_tbibgemesoregiao_tbibgeuf1`
-    FOREIGN KEY (`cdUf`)
-    REFERENCES `tbibgeuf` (`cdUf`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tbibgemesoregiao_tbibgemicroregiao1`
-    FOREIGN KEY (`cdUf` , `cdMesoregiao`)
-    REFERENCES `tbibgemicroregiao` (`cdUf` , `cdMesoregiao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
---separator
+-- separator
 
 CREATE TABLE IF NOT EXISTS `tbibgedistrito` (
-  `cdUf` INT NOT NULL,
-  `cdMunicipio` INT NOT NULL,
-  `cdDistrito` INT NOT NULL,
+  `cdUf` INT UNSIGNED NOT NULL,
+  `cdMunicipio` INT UNSIGNED NOT NULL,
+  `cdDistrito` INT UNSIGNED NOT NULL,
   `stDistrito` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`cdUf`, `cdMunicipio`, `cdDistrito`),
   INDEX `fk_tbibgedistrito_tbibgemunicipio1_idx` (`cdUf` ASC, `cdMunicipio` ASC),
@@ -78,13 +80,13 @@ CREATE TABLE IF NOT EXISTS `tbibgedistrito` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
---separator
+-- separator
 
 CREATE TABLE IF NOT EXISTS `tbibgesubdistrito` (
-  `cdUf` INT NOT NULL,
-  `cdMunicipio` INT NOT NULL,
-  `cdDistrito` INT NOT NULL,
-  `cdSubdistrito` INT NOT NULL,
+  `cdUf` INT UNSIGNED NOT NULL,
+  `cdMunicipio` INT UNSIGNED NOT NULL,
+  `cdDistrito` INT UNSIGNED NOT NULL,
+  `cdSubdistrito` INT UNSIGNED NOT NULL,
   `stSubdistrito` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`cdUf`, `cdMunicipio`, `cdDistrito`, `cdSubdistrito`),
   INDEX `fk_tbibgesubdistrito_tbibgedistrito1_idx` (`cdUf` ASC, `cdMunicipio` ASC, `cdDistrito` ASC),
@@ -95,10 +97,10 @@ CREATE TABLE IF NOT EXISTS `tbibgesubdistrito` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
---separator
+-- separator
 
 CREATE TABLE IF NOT EXISTS `tbibgecensorendimento` (
-  `cd` INT NOT NULL,
+  `cd` INT UNSIGNED NOT NULL,
   `semrenda` INT NOT NULL,
   `atemeio` INT NOT NULL,
   `entremeioe1` INT NOT NULL,
