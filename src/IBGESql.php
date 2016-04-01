@@ -55,6 +55,8 @@ class IBGESql
         /* @var $actionInstance ActionAbstract */
         $actionInstance = new $actionClass;
         $actionInstance->arguments();
+        $actionInstance->argumentsParse();
+        $actionInstance->process();
     }
 
 }
