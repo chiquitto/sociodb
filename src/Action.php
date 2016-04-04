@@ -12,14 +12,16 @@ class Action
     const ACTION_BD_CONFIG = 'bd-config';
     const ACTION_BD_DATA = 'bd-data';
     const ACTION_BD_PREPARE = 'bd-prepare';
-    const ACTION_IBGE_POPULACAO_MUNICIPIO = 'data-populacao';
+    const ACTION_IBGE_INIT = 'ibge-init';
+    const ACTION_IBGE_MUNICIPIO_POPULACAO = 'ibge-municipio-populacao';
     const ACTION_HELP = 'help';
 
     private static $actionClass = [
         self::ACTION_BD_CONFIG => 'Bd\\Config',
         self::ACTION_BD_DATA => 'Bd\\Data',
         self::ACTION_BD_PREPARE => 'Bd\\Prepare',
-        self::ACTION_IBGE_POPULACAO_MUNICIPIO => 'Ibge\\Populacao\\Municipio',
+        self::ACTION_IBGE_INIT => 'Ibge\\Init',
+        self::ACTION_IBGE_MUNICIPIO_POPULACAO => 'Ibge\\Municipio\\Populacao',
         self::ACTION_HELP => 'help',
     ];
     
@@ -27,6 +29,8 @@ class Action
         self::ACTION_BD_CONFIG => 'Configurar a conexão com o BD',
         self::ACTION_BD_DATA => 'Importar dados iniciais (lista de uf/municipios/etc)',
         self::ACTION_BD_PREPARE => 'Criar as tabelas no BD',
+        self::ACTION_IBGE_INIT => 'Inicializar dados para IBGE',
+        self::ACTION_IBGE_MUNICIPIO_POPULACAO => 'Atualizar população por municipio (IBGE)',
     ];
     
     public static function getActionClass($actionName)
