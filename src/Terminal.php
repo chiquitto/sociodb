@@ -1,8 +1,8 @@
 <?php
 
-namespace Chiquitto\IBGESql;
+namespace Chiquitto\Sociodb;
 
-use Chiquitto\IBGESql\Exception\ArgumentsParseException;
+use Chiquitto\Sociodb\Exception\ArgumentsParseException;
 use League\CLImate\CLImate;
 
 /**

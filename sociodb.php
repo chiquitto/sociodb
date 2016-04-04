@@ -3,5 +3,5 @@
 
 require './config.php';
 
-(new \Chiquitto\IBGESql\IBGESql())->run();
+(new \Chiquitto\Sociodb\Sociodb())->run();
 

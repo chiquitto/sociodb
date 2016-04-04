@@ -1,10 +1,10 @@
 <?php
 
-namespace Chiquitto\IBGESql\Action;
+namespace Chiquitto\Sociodb\Action;
 
-use Chiquitto\IBGESql\Action;
-use Chiquitto\IBGESql\Exception\ArgumentsParseException;
-use Chiquitto\IBGESql\Terminal;
+use Chiquitto\Sociodb\Action;
+use Chiquitto\Sociodb\Exception\ArgumentsParseException;
+use Chiquitto\Sociodb\Terminal;
 use Exception;
 
 /**

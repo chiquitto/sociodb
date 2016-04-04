@@ -1,6 +1,6 @@
 {
-    "name": "chiquitto/ibgesql",
-    "description": "Dados do IBGE disponibilizados em formato SQL",
+    "name": "chiquitto/sociodb",
+    "description": "Dados socioeconomicos disponibilizados em formato SQL",
     "authors": [
         {
             "name": "Alisson G. Chiquitto",
@@ -15,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Chiquitto\\IBGESql\\": "src/"
+            "Chiquitto\\Sociodb\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Chiquitto\\IBGESql\\Tests\\": "tests/"
+            "Chiquitto\\Sociodb\\Tests\\": "tests/"
         }
     }
 }

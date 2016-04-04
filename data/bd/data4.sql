@@ -1,7 +1,7 @@
-INSERT INTO `tbibgeuf` (cdUf, stUf, stSigla)
+INSERT INTO `tbsuf` (cdUf, stUf, stSigla)
 Select Distinct UF, Nome_UF, '--' Sigla From tbdtb;
 
-Update tbibgeuf
+Update tbsuf
 Set stSigla = Case
 When cdUf = 11 Then 'RO'
 When cdUf = 12 Then 'AC'
@@ -33,7 +33,7 @@ When cdUf = 53 Then 'DF'
 End
 Where (cdUf > 0);
 
-INSERT INTO `tbibgemesoregiao` (`cdUf`, `cdMesoregiao`, `stMesoregiao`)
+INSERT INTO `tbsmesoregiao` (`cdUf`, `cdMesoregiao`, `stMesoregiao`)
 Select Distinct
 UF,
 Mesorregiao_Geografica,
@@ -41,7 +41,7 @@ Nome_Mesorregiao
 From tbdtb
 ;
 
-INSERT INTO `tbibgemicroregiao`
+INSERT INTO `tbsmicroregiao`
 (`cdUf`, `cdMesoregiao`, `cdMicroregiao`, `stMicroregiao`)
 Select Distinct
 UF,
@@ -51,7 +51,7 @@ Nome_Microrregiao
 From tbdtb
 ;
 
-INSERT INTO `tbibgemunicipio`
+INSERT INTO `tbsmunicipio`
 (`cdUf`, `cdMunicipio`, `cdMicroregiao`, `stMunicipio`, `cdMunicipioCompleto`)
 Select Distinct
 UF,
@@ -62,14 +62,14 @@ Cod_Municipio_Completo
 From tbdtb
 ;
 
-INSERT INTO `tbibgedistrito`
+INSERT INTO `tbsdistrito`
 (`cdUf`, `cdMunicipio`, `cdDistrito`, `stDistrito`)
 Select Distinct
 UF, Municipio, Distrito, Nome_Distrito
 From tbdtb
 ;
 
-INSERT INTO `tbibgesubdistrito`
+INSERT INTO `tbssubdistrito`
 (`cdUf`, `cdMunicipio`, `cdDistrito`, `cdSubdistrito`, `stSubdistrito`)
 Select
 UF, Municipio, Distrito, Subdistrito, Nome_Subdistrito

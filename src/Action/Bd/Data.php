@@ -1,12 +1,13 @@
 <?php
 
-namespace Chiquitto\IBGESql\Action\Bd;
+namespace Chiquitto\Sociodb\Action\Bd;
 
-use Chiquitto\IBGESql\Action\ActionAbstract;
-use Chiquitto\IBGESql\Conexao;
+use Chiquitto\Sociodb\Action\ActionAbstract;
+use Chiquitto\Sociodb\Conexao;
 
 /**
- * Description of Config
+ * Description of Data
+ * Ex: ./sociodb.php bd-data
  *
  * @author chiquitto
  */
@@ -21,12 +22,12 @@ class Data extends ActionAbstract
     {
         $con = Conexao::getInstance();
         
-        $con->execSqlFile(PATH_IBGE . '/bd-data1.sql');
-        $con->execSqlFile(PATH_IBGE . '/bd-data2.sql');
+        $con->execSqlFile(PATH_DATA . '/bd/data1.sql');
+        $con->execSqlFile(PATH_DATA . '/bd/data2.sql');
         
-        $con->execSqlFile(PATH_IBGE . '/bd-data3.sql');
-        $con->execSqlFile(PATH_IBGE . '/bd-data4.sql');
+        $con->execSqlFile(PATH_DATA . '/bd/data3.sql');
+        $con->execSqlFile(PATH_DATA . '/bd/data4.sql');
         
-        $con->execSqlFile(PATH_IBGE . '/bd-data5.sql');
+        $con->execSqlFile(PATH_DATA . '/bd/data5.sql');
     }
 }

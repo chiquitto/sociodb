@@ -1,13 +1,13 @@
 <?php
 
-namespace Chiquitto\IBGESql\Action\Bd;
+namespace Chiquitto\Sociodb\Action\Bd;
 
-use Chiquitto\IBGESql\Action\ActionAbstract;
-use Chiquitto\IBGESql\Conexao;
+use Chiquitto\Sociodb\Action\ActionAbstract;
+use Chiquitto\Sociodb\Conexao;
 
 /**
  * Description of Config
- * Ex: ./ibgesql -h bd-prepare -d "mysql:host=localhost;dbname=ibge" -u root
+ * Ex: ./sociodb.php bd-prepare
  *
  * @author chiquitto
  */
@@ -23,17 +23,8 @@ class Prepare extends ActionAbstract
     {
         $con = Conexao::getInstance();
 
-        $content = file_get_contents(PATH . '/db/mysql/script.sql');
-        $sqls = explode('-- separator', $content);
-
-        foreach ($sqls as $sql) {
-            try {
-                $con->exec(trim($sql));
-            } catch (Exception $exc) {
-                echo $exc, "\n\n", $sql;
-                exit;
-            }
-        }
+        $con->execSqlFile(PATH . '/db/mysql/base.sql');
+        $con->execSqlFile(PATH . '/db/mysql/ibge.sql');
     }
 
 }

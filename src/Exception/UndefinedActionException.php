@@ -1,8 +1,8 @@
 <?php
 
-namespace Chiquitto\IBGESql\Exception;
+namespace Chiquitto\Sociodb\Exception;
 
-use Chiquitto\IBGESql\Exception;
+use Chiquitto\Sociodb\Exception;
 
 /**
  * Description of UndefinedActionException

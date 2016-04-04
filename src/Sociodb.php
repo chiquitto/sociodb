@@ -1,17 +1,17 @@
 <?php
 
-namespace Chiquitto\IBGESql;
+namespace Chiquitto\Sociodb;
 
-use Chiquitto\IBGESql\Action\ActionAbstract;
-use Chiquitto\IBGESql\Exception\ArgumentsParseException;
-use Chiquitto\IBGESql\Exception\UndefinedActionException;
+use Chiquitto\Sociodb\Action\ActionAbstract;
+use Chiquitto\Sociodb\Exception\ArgumentsParseException;
+use Chiquitto\Sociodb\Exception\UndefinedActionException;
 
 /**
- * Description of IBGESql
+ * Description of Sociodb
  *
  * @author chiquitto
  */
-class IBGESql
+class Sociodb
 {
 
     public function run()

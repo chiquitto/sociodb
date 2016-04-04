@@ -1,13 +1,13 @@
 <?php
 
-namespace Chiquitto\IBGESql\Action\Bd;
+namespace Chiquitto\Sociodb\Action\Bd;
 
-use Chiquitto\IBGESql\Action\ActionAbstract;
-use Chiquitto\IBGESql\Terminal;
+use Chiquitto\Sociodb\Action\ActionAbstract;
+use Chiquitto\Sociodb\Terminal;
 
 /**
  * Description of Config
- * Ex: ./ibgesql -h bd-config -d "mysql:host=localhost;dbname=ibge" -u root
+ * Ex: ./sociodb.php bd-config -d "mysql:host=localhost;dbname=sociodb" -u root
  *
  * @author chiquitto
  */

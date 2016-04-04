@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiquitto\IBGESql;
+namespace Chiquitto\Sociodb;
 
 use Exception as PhpException;
 

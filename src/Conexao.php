@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiquitto\IBGESql;
+namespace Chiquitto\Sociodb;
 
 use PDO;
 use PDOException;
@@ -27,7 +27,7 @@ class Conexao extends PDO
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // $this->query('SET NAMES UTF8'); // UTF-8 Mysql
         } catch (PDOException $e) {
-            echo "Conexão falhou. Erro: " . $e->getMessage();
+            echo "Conexão falhou. Erro: " . $e->getMessage() . "\n";
             exit;
         }
     }
@@ -61,7 +61,7 @@ class Conexao extends PDO
         $host = escapeshellarg('localhost');
         $user = escapeshellarg($this->user);
         $pass = escapeshellarg($this->password);
-        $dbname = escapeshellarg('ibge');
+        $dbname = escapeshellarg('sociodb');
         $filename = escapeshellarg($filename);
 
         $command = "mysql -h {$host} -u {$user} -p{$pass} -D {$dbname} --default-character-set=utf8 < {$filename}";
