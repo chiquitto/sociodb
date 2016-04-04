@@ -27,7 +27,6 @@ class Prepare extends ActionAbstract
         $sqls = explode('-- separator', $content);
 
         foreach ($sqls as $sql) {
-            echo $sql;
             try {
                 $con->exec(trim($sql));
             } catch (Exception $exc) {

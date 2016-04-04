@@ -10,17 +10,20 @@ namespace Chiquitto\IBGESql;
 class Action
 {
     const ACTION_BD_CONFIG = 'bd-config';
+    const ACTION_BD_DATA = 'bd-data';
     const ACTION_BD_PREPARE = 'bd-prepare';
     const ACTION_HELP = 'help';
 
     private static $actionClass = [
         self::ACTION_BD_CONFIG => 'Bd\\Config',
+        self::ACTION_BD_DATA => 'Bd\\Data',
         self::ACTION_BD_PREPARE => 'Bd\\Prepare',
         self::ACTION_HELP => 'help',
     ];
     
     private static $actionDescription = [
         self::ACTION_BD_CONFIG => 'Configurar a conexão com o BD',
+        self::ACTION_BD_DATA => 'Importar dados iniciais (lista de uf/municipios/etc)',
         self::ACTION_BD_PREPARE => 'Criar as tabelas no BD',
     ];
     
