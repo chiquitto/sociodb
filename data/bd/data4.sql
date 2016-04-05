@@ -52,10 +52,11 @@ From tbdtb
 ;
 
 INSERT INTO `tbsmunicipio`
-(`cdUf`, `cdMunicipio`, `cdMicroregiao`, `stMunicipio`, `cdMunicipioCompleto`)
+(`cdUf`, `cdMunicipio`, `cdMunicipioDv`, `cdMicroregiao`, `stMunicipio`, `cdMunicipioCompleto`)
 Select Distinct
 UF,
-Municipio,
+Left(Municipio, Length(Municipio) - 1) cdMunicipio,
+Right(Municipio, 1) dv,
 Microrregiao_Geografica,
 Nome_Municipio,
 Cod_Municipio_Completo
@@ -65,14 +66,19 @@ From tbdtb
 INSERT INTO `tbsdistrito`
 (`cdUf`, `cdMunicipio`, `cdDistrito`, `stDistrito`)
 Select Distinct
-UF, Municipio, Distrito, Nome_Distrito
+UF,
+Left(Municipio, Length(Municipio) - 1) cdMunicipio,
+Distrito,
+Nome_Distrito
 From tbdtb
 ;
 
 INSERT INTO `tbssubdistrito`
 (`cdUf`, `cdMunicipio`, `cdDistrito`, `cdSubdistrito`, `stSubdistrito`)
 Select
-UF, Municipio, Distrito, Subdistrito, Nome_Subdistrito
+UF,
+Left(Municipio, Length(Municipio) - 1) cdMunicipio,
+Distrito, Subdistrito, Nome_Subdistrito
 From tbdtb
 Where Subdistrito > 0
 ;

@@ -33,6 +33,10 @@ Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
         $con->beginTransaction();
         
         foreach ($iterator as $index => $row) {
+            // Remover o digito verificador
+            // Dividir por 10, e usar apenas a parte inteira
+            $row['Codmun'] = (int) (((int) $row['Codmun']) / 10);
+            
             $row['Populacao'] = strtr($row['Populacao'], array(',' => ''));
             
             $st->bindValue(':cdUf', $row['CodUF']);

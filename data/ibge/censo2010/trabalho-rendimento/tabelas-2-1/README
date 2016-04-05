@@ -1,0 +1,7 @@
+Pessoas de 10 anos ou mais de idade, por condição de atividade na semana de referência e as classes de rendimento nominal mensal, segundo as mesorregiões, as microrregiões e os municípios - Censo 2010
+
+Dados extraidos de
+ftp://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Trabalho_e_Rendimento/ods/
+
+Para encontrar a fonte procure pelos arquivos "{uf}_munic.zip", onde {uf} é o UF que você precisa.
+Dentro desses arquivos exitem os "tab4_{var}_2_1.ods", onde {var} é um número qualquer usado dentro do zip.

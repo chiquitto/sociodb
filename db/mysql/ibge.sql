@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `tbmunicipio_ibge` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `tbmunicipio_ibge_censorendimento` (
+CREATE TABLE IF NOT EXISTS `tbibge_censo_rendimento` (
   `cdUf` INT UNSIGNED NOT NULL,
   `cdMunicipio` INT UNSIGNED NOT NULL,
   `semrenda` INT NOT NULL,
@@ -40,4 +40,3 @@ CREATE TABLE IF NOT EXISTS `tbmunicipio_ibge_censorendimento` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-

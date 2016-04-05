@@ -34,7 +34,8 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `tbsmunicipio` (
   `cdUf` INT UNSIGNED NOT NULL,
-  `cdMunicipio` INT UNSIGNED NOT NULL COMMENT 'com DV',
+  `cdMunicipio` INT UNSIGNED NOT NULL,
+  `cdMunicipioDv` TINYINT NOT NULL,
   `cdMicroregiao` INT UNSIGNED NOT NULL,
   `stMunicipio` VARCHAR(45) NOT NULL,
   `cdMunicipioCompleto` INT UNSIGNED NOT NULL,

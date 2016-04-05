@@ -1,0 +1,5 @@
+./sociodb.php bd-prepare
+./sociodb.php bd-data
+./sociodb.php ibge-init
+./sociodb.php ibge-municipio-populacao
+./sociodb.php ibge-censo2010-rendimento1
