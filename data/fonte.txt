@@ -1,7 +1,10 @@
 Utilize este arquivo para informar as fontes dos dados.
 Isto é muito importante, pois os dados só tem importância se tiver fontes confiáveis.
 
-* ibge/estimativa_dou_2015_20150915.csv
+* ibge-municipio-pib
+Dados removidos de ftp://ftp.ibge.gov.br/Pib_Municipios/2010_2013/base/
+e salvo em /data/ibge/pib-2010-2013.txt
+
+* ibge-municipio-populacao
 ESTIMATIVAS DA POPULAÇÃO RESIDENTE NO BRASIL E UNIDADES DA FEDERAÇÃO COM DATA DE REFERÊNCIA EM 1º DE JULHO DE 2015
 ftp://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2015/estimativa_dou_2015_20150915.ods
-

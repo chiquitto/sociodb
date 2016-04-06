@@ -23,7 +23,7 @@ class Populacao extends ActionAbstract
         $reader = Reader::createFromPath(PATH_DATA . '/ibge/estimativa_dou_2015_20150915.csv');
         $iterator = $reader->fetchAssoc(0);
         
-        $sql = "UPDATE tbmunicipio_ibge
+        $sql = "UPDATE tbibge_municipio
 SET qtPopulacao = :qtPopulacao
 Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
         

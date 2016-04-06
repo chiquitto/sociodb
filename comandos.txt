@@ -3,3 +3,4 @@
 ./sociodb.php ibge-init
 ./sociodb.php ibge-municipio-populacao
 ./sociodb.php ibge-censo2010-rendimento1
+./sociodb.php ibge-municipio-pib

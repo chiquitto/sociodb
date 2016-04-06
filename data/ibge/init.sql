@@ -1,4 +1,4 @@
-Delete From tbmunicipio_ibge;
+Delete From tbibge_municipio;
 
-INSERT INTO tbmunicipio_ibge (cdUf, cdMunicipio, cdMicroregiao, cdMunicipioCompleto)
+INSERT INTO tbibge_municipio (cdUf, cdMunicipio, cdMicroregiao, cdMunicipioCompleto)
 Select cdUf, cdMunicipio, cdMicroregiao, cdMunicipioCompleto From tbsmunicipio;
