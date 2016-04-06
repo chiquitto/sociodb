@@ -51,6 +51,8 @@ class Sociodb
         if ($actionClass === null) {
             throw new UndefinedActionException("Ação indefinida: $actionName");
         }
+        
+        $terminal->out('');
 
         /* @var $actionInstance ActionAbstract */
         $actionInstance = new $actionClass;

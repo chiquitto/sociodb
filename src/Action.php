@@ -16,6 +16,7 @@ class Action
     const ACTION_IBGE_INIT = 'ibge-init';
     const ACTION_IBGE_MUNICIPIO_PIB = 'ibge-municipio-pib';
     const ACTION_IBGE_MUNICIPIO_POPULACAO = 'ibge-municipio-populacao';
+    const ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO = 'ibge-municipio-rendimento-medio-mensal-domicio-urbano';
     const ACTION_HELP = 'help';
 
     private static $actionClass = [
@@ -26,6 +27,7 @@ class Action
         self::ACTION_IBGE_INIT => 'Ibge\\Init',
         self::ACTION_IBGE_MUNICIPIO_PIB => 'Ibge\\Municipio\\Pib',
         self::ACTION_IBGE_MUNICIPIO_POPULACAO => 'Ibge\\Municipio\\Populacao',
+        self::ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO => 'Ibge\\Municipio\\RendimentoMedioMensalDomicilioUrbano',
         self::ACTION_HELP => 'help',
     ];
     
@@ -37,6 +39,7 @@ class Action
         self::ACTION_IBGE_INIT => 'Inicializar dados para IBGE',
         self::ACTION_IBGE_MUNICIPIO_PIB => 'Atualizar PIB por municipio (IBGE)',
         self::ACTION_IBGE_MUNICIPIO_POPULACAO => 'Atualizar população por municipio (IBGE)',
+        self::ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO => 'Atualizar Valor do rendimento nominal médio mensal dos domicílios particulares permanentes com rendimento domiciliar, por situação do domicílio - Urbana (IBGE)',
     ];
     
     public static function getActionClass($actionName)
