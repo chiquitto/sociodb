@@ -19,7 +19,6 @@
             "Chiquitto\\Sociodb\\": "src/"
         }
     },
-    "minimum-stability": "dev",
     "autoload-dev": {
         "psr-4": {
             "Chiquitto\\Sociodb\\Tests\\": "tests/"
