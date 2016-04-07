@@ -2,8 +2,6 @@
 
 namespace Chiquitto\Sociodb;
 
-use Chiquitto\Sociodb\Action\ActionAbstract;
-use Chiquitto\Sociodb\Exception\ArgumentsParseException;
 use Chiquitto\Sociodb\Exception\UndefinedActionException;
 
 /**
@@ -14,57 +12,21 @@ use Chiquitto\Sociodb\Exception\UndefinedActionException;
 class Sociodb
 {
 
-    public function run()
+    /**
+     * 
+     * @param string $actionName
+     * @param array $options
+     * @return Action\ActionAbstract
+     * @throws UndefinedActionException
+     */
+    public static function getActionInstance($actionName, $options = [])
     {
-        $exception = null;
-        
-        try {
-            $this->runAction();
-        } catch (UndefinedActionException $exc) {
-            $exception = $exc;
-        } catch (ArgumentsParseException $exc) {
-            $exception = $exc;
-        }
-        
-        if ($exception instanceof Exception) {
-            $terminal = Terminal::getInstance();
-            $terminal->error('Erro: ' . $exc->getMessage());
-        }
-        
-        if ($exception instanceof ArgumentsParseException) {
-            $terminal->usage();
-        }
-    }
-
-    private function runAction()
-    {
-        $terminal = Terminal::getInstance();
-
-        $actionName = $terminal->getActionName();
-
-        if (($actionName == '') && ($terminal->isHelp())) {
-            $terminal->usage();
-            return;
-        }
-
         $actionClass = Action::getActionClass($actionName);
         if ($actionClass === null) {
             throw new UndefinedActionException("Ação indefinida: $actionName");
         }
         
-        $terminal->out('');
-
-        /* @var $actionInstance ActionAbstract */
-        $actionInstance = new $actionClass;
-        $actionInstance->arguments();
-        
-        if ($terminal->isHelp()) {
-            $terminal->usage();
-            return;
-        }
-        
-        $actionInstance->argumentsParse();
-        $actionInstance->process();
+        return new $actionClass;
     }
 
 }

@@ -12,13 +12,10 @@ use Chiquitto\Sociodb\Conexao;
  */
 class Init extends ActionAbstract
 {
-    public function arguments()
-    {
-        
-    }
-    
-    public function process()
+
+    public function process(array $params = array())
     {
         Conexao::getInstance()->execSqlFile(PATH_DATA . '/ibge/init.sql');
     }
+
 }

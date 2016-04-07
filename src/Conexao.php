@@ -13,9 +13,9 @@ use PDOException;
 class Conexao extends PDO
 {
 
-    private $dsn;
-    private $user;
-    private $password;
+    private static $dsn;
+    private static $user;
+    private static $password;
     private static $instancia;
 
     public function __construct()
@@ -23,7 +23,7 @@ class Conexao extends PDO
         $this->loadFile();
 
         try {
-            parent::__construct($this->dsn, $this->user, $this->password);
+            parent::__construct(self::$dsn, self::$user, self::$password);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // $this->query('SET NAMES UTF8'); // UTF-8 Mysql
         } catch (PDOException $e) {
@@ -32,15 +32,20 @@ class Conexao extends PDO
         }
     }
 
+    public static function setConfig($dsn, $user, $password)
+    {
+        self::$dsn = $dsn;
+        self::$user = $user;
+        self::$password = $password;
+    }
+
     private function loadFile()
     {
-        if ($this->dsn === null) {
+        if (self::$dsn === null) {
             $content = file_get_contents(DB_CONFIG);
             $data = json_decode($content);
 
-            $this->dsn = $data->dsn;
-            $this->user = $data->user;
-            $this->password = $data->pass;
+            self::setConfig($data->dsn, $data->user, $data->pass);
         }
     }
 
@@ -59,8 +64,8 @@ class Conexao extends PDO
     public function execSqlFile($filename, $delimiter = ';')
     {
         $host = escapeshellarg('localhost');
-        $user = escapeshellarg($this->user);
-        $pass = escapeshellarg($this->password);
+        $user = escapeshellarg(self::$user);
+        $pass = escapeshellarg(self::$password);
         $dbname = escapeshellarg('sociodb');
         $filename = escapeshellarg($filename);
 

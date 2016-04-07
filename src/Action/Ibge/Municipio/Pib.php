@@ -14,11 +14,6 @@ use Chiquitto\Sociodb\Terminal;
 class Pib extends ActionAbstract
 {
 
-    public function arguments()
-    {
-        
-    }
-
     private function parseLine($line)
     {
         $r = [];
@@ -34,7 +29,7 @@ class Pib extends ActionAbstract
         return $r;
     }
 
-    public function process()
+    public function process(array $params = array())
     {
         $filename = PATH_DATA . '/ibge/pib-2010-2013.txt';
         $content = file($filename);
@@ -50,8 +45,6 @@ class Pib extends ActionAbstract
 
         $con->beginTransaction();
         
-        $progress = Terminal::getInstance()->progress()->total(count($content));
-        
         foreach ($content as $line) {
             $line = $this->parseLine($line);
             
@@ -63,8 +56,6 @@ class Pib extends ActionAbstract
             $st->bindValue(':vlPibCapita', $line['vlPibCapita']);
 
             $st->execute();
-            
-            $progress->advance();
         }
         
         $con->commit();

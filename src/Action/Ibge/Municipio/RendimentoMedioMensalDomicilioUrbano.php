@@ -17,24 +17,10 @@ use PDOException;
 class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
 {
     
-    /**
-     *
-     * @var Progress
-     */
-    private $progress;
-
-    public function arguments()
-    {
-        
-    }
-
-    public function process()
+    public function process(array $params = array())
     {
         $ufRowset = Conexao::getInstance()->query('SELECT cdUf, stSigla From tbsuf');
         
-        $this->progress = Terminal::getInstance()->progress();
-        $this->progress->total(5570);
-
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow);
         }
@@ -83,8 +69,6 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
                 echo $exc;
                 exit;
             }
-            
-            $this->progress->advance(1, "Importando dados {$uf['stSigla']}");
         }
 
         $con->commit();

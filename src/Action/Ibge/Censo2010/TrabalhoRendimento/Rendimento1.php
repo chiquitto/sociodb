@@ -13,12 +13,7 @@ use PDO;
  */
 class Rendimento1 extends ActionAbstract
 {
-    public function arguments()
-    {
-        
-    }
-    
-    public function process()
+    public function process(array $params = array())
     {
         Conexao::getInstance()->exec('Delete From tbibge_censo_rendimento');
         
