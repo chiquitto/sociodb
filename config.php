@@ -5,5 +5,3 @@ define('PATH_DATA', PATH . '/data');
 define('PATH_TMP', PATH . '/tmp');
 
 define('DB_CONFIG', PATH_TMP . '/db.json');
-
-require PATH . '/vendor/autoload.php';
