@@ -2,9 +2,12 @@
 
 namespace Chiquitto\Sociodb\Terminal;
 
-use Chiquitto\Sociodb\Action\ActionAbstract;
+use Chiquitto\Sociodb\Exception;
 use Chiquitto\Sociodb\Exception\ArgumentsParseException;
 use Chiquitto\Sociodb\Exception\UndefinedActionException;
+use Chiquitto\Sociodb\Terminal;
+use Chiquitto\Sociodb\Terminal\Action as TerminalAction;
+use Chiquitto\Sociodb\Terminal\Action\ActionAbstract;
 
 /**
  * Description of Sociodb
@@ -13,6 +16,11 @@ use Chiquitto\Sociodb\Exception\UndefinedActionException;
  */
 class Router
 {
+    
+    private function getActionName()
+    {
+        return Terminal::getInstance()->arguments->get('action');
+    }
 
     public function run()
     {
@@ -40,30 +48,24 @@ class Router
     {
         $terminal = Terminal::getInstance();
 
-        $actionName = $terminal->getActionName();
+        $actionName = $this->getActionName();
 
-        if (($actionName == '') && ($terminal->isHelp())) {
-            $terminal->usage();
-            return;
-        }
-
-        $actionClass = Action::getActionClass($actionName);
+        $actionClass = TerminalAction::getNamespacedActionClass($actionName);
         if ($actionClass === null) {
             throw new UndefinedActionException("Ação indefinida: $actionName");
         }
         
-        $terminal->out('');
-
         /* @var $actionInstance ActionAbstract */
         $actionInstance = new $actionClass;
         $actionInstance->arguments();
         
-        if ($terminal->isHelp()) {
+        if ($terminal->arguments->defined('help')) {
             $terminal->usage();
             return;
         }
         
         $actionInstance->argumentsParse();
+        // $terminal->out('');
         $actionInstance->process();
     }
 

@@ -27,10 +27,7 @@ class Terminal extends CLImate
 
         self::$instance->arguments->add([
             'action' => [
-                //'prefix' => 'a',
-                //'longPrefix' => 'action',
                 'description' => 'Ação a ser executada',
-                //'defaultValue' => 'help',
                 'required' => true,
             ],
             'help' => [
@@ -48,16 +45,6 @@ class Terminal extends CLImate
         }
     }
 
-    public function isHelp()
-    {
-        return $this->arguments->defined('help');
-    }
-
-    public function getActionName()
-    {
-        return $this->arguments->get('action');
-    }
-
     /**
      * 
      * @return Terminal
@@ -68,6 +55,11 @@ class Terminal extends CLImate
             self::initTerminal();
         }
         return self::$instance;
+    }
+    
+    public function run()
+    {
+        (new Terminal\Router())->run();
     }
 
 }

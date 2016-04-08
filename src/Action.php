@@ -28,7 +28,7 @@ class Action
         self::ACTION_IBGE_MUNICIPIO_PIB => 'Ibge\\Municipio\\Pib',
         self::ACTION_IBGE_MUNICIPIO_POPULACAO => 'Ibge\\Municipio\\Populacao',
         self::ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO => 'Ibge\\Municipio\\RendimentoMedioMensalDomicilioUrbano',
-        self::ACTION_HELP => 'help',
+        self::ACTION_HELP => 'Help',
     ];
     
     private static $actionDescription = [
@@ -47,7 +47,7 @@ class Action
         if (!isset(self::$actionClass[$actionName])) {
             return null;
         }
-        return __NAMESPACE__ . '\\Action\\' . self::$actionClass[$actionName];
+        return self::$actionClass[$actionName];
     }
     
     public static function getActionDescription($actionName)
@@ -56,5 +56,13 @@ class Action
             return null;
         }
         return self::$actionDescription[$actionName];
+    }
+    
+    public static function getNamespacedActionClass($actionName)
+    {
+        if (!isset(self::$actionClass[$actionName])) {
+            return null;
+        }
+        return __NAMESPACE__ . '\\Action\\' . self::$actionClass[$actionName];
     }
 }

@@ -21,7 +21,7 @@ class Sociodb
      */
     public static function getActionInstance($actionName, $options = [])
     {
-        $actionClass = Action::getActionClass($actionName);
+        $actionClass = Action::getNamespacedActionClass($actionName);
         if ($actionClass === null) {
             throw new UndefinedActionException("Ação indefinida: $actionName");
         }
