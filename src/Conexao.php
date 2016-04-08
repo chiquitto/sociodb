@@ -14,6 +14,7 @@ class Conexao extends PDO
 {
 
     private static $dsn;
+    private static $dsnValues;
     private static $user;
     private static $password;
     private static $instancia;
@@ -21,7 +22,7 @@ class Conexao extends PDO
     public function __construct()
     {
         $this->loadFile();
-
+        
         try {
             parent::__construct(self::$dsn, self::$user, self::$password);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -31,12 +32,29 @@ class Conexao extends PDO
             exit;
         }
     }
+    
+    public function getDsnValue($key)
+    {
+        return self::$dsnValues[$key];
+    }
 
     public static function setConfig($dsn, $user, $password)
     {
         self::$dsn = $dsn;
         self::$user = $user;
         self::$password = $password;
+        
+        // extract values from dsn
+        list($dsnType, $dsnValues) = explode(':', $dsn);
+        
+        $dsnValuesExploded = explode(';', $dsnValues);
+        
+        self::$dsnValues = [];
+        self::$dsnValues['type'] = $dsnType;
+        foreach ($dsnValuesExploded as $dsnValue) {
+            $tmp = explode('=', $dsnValue);
+            self::$dsnValues[$tmp[0]] = $tmp[1];
+        }
     }
 
     private function loadFile()
@@ -63,10 +81,10 @@ class Conexao extends PDO
 
     public function execSqlFile($filename, $delimiter = ';')
     {
-        $host = escapeshellarg('localhost');
+        $host = escapeshellarg($this->getDsnValue('host'));
         $user = escapeshellarg(self::$user);
         $pass = escapeshellarg(self::$password);
-        $dbname = escapeshellarg('sociodb');
+        $dbname = escapeshellarg($this->getDsnValue('dbname'));
         $filename = escapeshellarg($filename);
 
         $command = "mysql -h {$host} -u {$user} -p{$pass} -D {$dbname} --default-character-set=utf8 < {$filename}";

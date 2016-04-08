@@ -1,7 +1,7 @@
 #! /usr/bin/php
 <?php
 
-require './config.php';
+require './vendor/autoload.php';
 
 use Chiquitto\Sociodb\Action;
 use Chiquitto\Sociodb\Conexao;
