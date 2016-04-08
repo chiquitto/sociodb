@@ -13,21 +13,18 @@ use Chiquitto\Sociodb\Conexao;
  */
 class Data extends ActionAbstract
 {
-    public function arguments()
-    {
-        
-    }
-    
-    public function process()
+
+    public function process(array $params = [])
     {
         $con = Conexao::getInstance();
-        
+
         $con->execSqlFile(PATH_DATA . '/bd/data1.sql');
         $con->execSqlFile(PATH_DATA . '/bd/data2.sql');
-        
+
         $con->execSqlFile(PATH_DATA . '/bd/data3.sql');
         $con->execSqlFile(PATH_DATA . '/bd/data4.sql');
-        
+
         $con->execSqlFile(PATH_DATA . '/bd/data5.sql');
     }
+
 }

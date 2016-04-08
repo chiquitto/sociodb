@@ -14,15 +14,12 @@ use Chiquitto\Sociodb\Conexao;
 class Prepare extends ActionAbstract
 {
 
-    public function arguments()
-    {
-        
-    }
-
-    public function process()
+    public function process(array $params = array())
     {
         $con = Conexao::getInstance();
 
+        $con->execSqlFile(PATH . '/db/mysql/drop.sql');
+        
         $con->execSqlFile(PATH . '/db/mysql/base.sql');
         $con->execSqlFile(PATH . '/db/mysql/ibge.sql');
     }

@@ -3,51 +3,29 @@
 namespace Chiquitto\Sociodb\Action\Bd;
 
 use Chiquitto\Sociodb\Action\ActionAbstract;
-use Chiquitto\Sociodb\Terminal;
 
 /**
- * Description of Config
- * Ex: ./sociodb.php bd-config -d "mysql:host=localhost;dbname=sociodb" -u root
+ * Description of Data
+ * Ex: ./sociodb.php bd-data
  *
  * @author chiquitto
  */
 class Config extends ActionAbstract
 {
-    public function arguments()
+
+    public function process(array $params = [])
     {
-        $terminal = Terminal::getInstance();
-        $terminal->arguments->add([
-            'dsn' => [
-                'prefix' => 'd',
-                'longPrefix' => 'dsn',
-                'description' => 'DSN para a conexão',
-                'required' => true,
-            ],
-            'user' => [
-                'prefix' => 'u',
-                'longPrefix' => 'user',
-                'description' => 'Usuário para a conexão',
-                'required' => true,
-            ],
-            'password' => [
-                'prefix' => 'p',
-                'longPrefix' => 'password',
-                'description' => 'Senha para a conexão',
-            ],
-        ]);
-    }
-    
-    public function process()
-    {
-        $terminal = Terminal::getInstance();
-        $args = $terminal->arguments->toArray();
-        
         $content = [
-            'dsn' => $args['dsn'],
-            'user' => $args['user'],
-            'pass' => $args['password']
+            'dsn' => $params['dsn'],
+            'user' => $params['user'],
+            'pass' => $params['password']
         ];
+        
+        if (!is_dir(PATH_TMP)) {
+            mkdir(PATH_TMP, 0777, true);
+        }
         
         file_put_contents(DB_CONFIG, json_encode($content));
     }
+
 }

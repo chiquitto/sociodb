@@ -13,12 +13,7 @@ use League\Csv\Reader;
  */
 class Populacao extends ActionAbstract
 {
-    public function arguments()
-    {
-        
-    }
-    
-    public function process()
+    public function process(array $params = array())
     {
         $reader = Reader::createFromPath(PATH_DATA . '/ibge/estimativa_dou_2015_20150915.csv');
         $iterator = $reader->fetchAssoc(0);

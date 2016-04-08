@@ -3,5 +3,5 @@
 
 require './config.php';
 
-(new \Chiquitto\Sociodb\Sociodb())->run();
+\Chiquitto\Sociodb\Terminal::getInstance()->run();
 
