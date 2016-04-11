@@ -18,13 +18,13 @@ class Data extends ActionAbstract
     {
         $con = Conexao::getInstance();
 
-        $con->execSqlFile(PATH_DATA . '/bd/data1.sql');
-        $con->execSqlFile(PATH_DATA . '/bd/data2.sql');
+        $con->execSqlFile(SOCIODB_PATH_DATA . '/bd/data1.sql');
+        $con->execSqlFile(SOCIODB_PATH_DATA . '/bd/data2.sql');
 
-        $con->execSqlFile(PATH_DATA . '/bd/data3.sql');
-        $con->execSqlFile(PATH_DATA . '/bd/data4.sql');
+        $con->execSqlFile(SOCIODB_PATH_DATA . '/bd/data3.sql');
+        $con->execSqlFile(SOCIODB_PATH_DATA . '/bd/data4.sql');
 
-        $con->execSqlFile(PATH_DATA . '/bd/data5.sql');
+        $con->execSqlFile(SOCIODB_PATH_DATA . '/bd/data5.sql');
     }
 
 }

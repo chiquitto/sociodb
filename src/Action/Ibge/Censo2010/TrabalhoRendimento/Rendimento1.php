@@ -26,7 +26,7 @@ class Rendimento1 extends ActionAbstract
     
     private function processUf($cdUf)
     {
-        $file = PATH_DATA . "/ibge/censo2010/trabalho-rendimento/tabelas-2-1/rendimentos-{$cdUf}.csv";
+        $file = SOCIODB_PATH_DATA . "/ibge/censo2010/trabalho-rendimento/tabelas-2-1/rendimentos-{$cdUf}.csv";
         
         if (!is_file($file)) {
             die("$file inexistente");

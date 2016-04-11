@@ -31,7 +31,7 @@ class Pib extends ActionAbstract
 
     public function process(array $params = array())
     {
-        $filename = PATH_DATA . '/ibge/pib-2010-2013.txt';
+        $filename = SOCIODB_PATH_DATA . '/ibge/pib-2010-2013.txt';
         $content = file($filename);
 
         $sql = "INSERT INTO tbibge_pib_municipio (cdUf, cdMunicipio, nrAno, vlPib, qtPopulacao, vlPibCapita)
