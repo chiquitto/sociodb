@@ -40,6 +40,10 @@ Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
             $st->execute();
         }
         
+        $sql = "Update tbibge_uf iu
+Set iu.qtPopulacao = (Select Sum(im.qtPopulacao) From tbibge_municipio im Where (im.cdUf = iu.cdUf) Group By im.cdUf)";
+        $con->exec($sql);
+        
         $con->commit();
     }
 }

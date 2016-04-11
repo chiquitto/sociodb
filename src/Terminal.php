@@ -41,7 +41,9 @@ class Terminal extends CLImate
         try {
             self::$instance->arguments->parse();
         } catch (\Exception $exc) {
-            throw new ArgumentsParseException(null, null, $exc);
+            // throw new ArgumentsParseException(null, null, $exc);
+            self::$instance->usage();
+            exit;
         }
     }
 

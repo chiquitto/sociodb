@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS tbibge_uf;
 DROP TABLE IF EXISTS tbibge_pib_municipio;
 DROP TABLE IF EXISTS tbibge_censo_rendimento;
 DROP TABLE IF EXISTS tbibge_municipio;
