@@ -18,10 +18,10 @@ class Prepare extends ActionAbstract
     {
         $con = Conexao::getInstance();
 
-        $con->execSqlFile(PATH . '/db/mysql/drop.sql');
+        $con->execSqlFile(SOCIODB_PATH . '/db/mysql/drop.sql');
         
-        $con->execSqlFile(PATH . '/db/mysql/base.sql');
-        $con->execSqlFile(PATH . '/db/mysql/ibge.sql');
+        $con->execSqlFile(SOCIODB_PATH . '/db/mysql/base.sql');
+        $con->execSqlFile(SOCIODB_PATH . '/db/mysql/ibge.sql');
     }
 
 }

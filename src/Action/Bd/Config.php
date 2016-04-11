@@ -21,11 +21,11 @@ class Config extends ActionAbstract
             'pass' => $params['password']
         ];
         
-        if (!is_dir(PATH_TMP)) {
-            mkdir(PATH_TMP, 0777, true);
+        if (!is_dir(SOCIODB_PATH_TMP)) {
+            mkdir(SOCIODB_PATH_TMP, 0777, true);
         }
         
-        file_put_contents(DB_CONFIG, json_encode($content));
+        file_put_contents(SOCIODB_DB_CONFIG, json_encode($content));
     }
 
 }

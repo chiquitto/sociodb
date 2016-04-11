@@ -1,7 +1,7 @@
 <?php
 
-define('PATH', __DIR__);
-define('PATH_DATA', PATH . '/data');
-define('PATH_TMP', PATH . '/tmp');
+define('SOCIODB_PATH', __DIR__);
+define('SOCIODB_PATH_DATA', SOCIODB_PATH . '/data');
+define('SOCIODB_PATH_TMP', SOCIODB_PATH . '/tmp');
 
-define('DB_CONFIG', PATH_TMP . '/db.json');
+define('SOCIODB_DB_CONFIG', SOCIODB_PATH_TMP . '/db.json');
