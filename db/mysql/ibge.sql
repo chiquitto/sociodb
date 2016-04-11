@@ -54,3 +54,13 @@ CREATE TABLE IF NOT EXISTS `tbibge_pib_municipio` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `tbibge_uf` (
+  `cdUf` INT UNSIGNED NOT NULL,
+  `qtPopulacao` INT NULL,
+  PRIMARY KEY (`cdUf`),
+  CONSTRAINT `fk_tbibge_uf_tbsuf1`
+    FOREIGN KEY (`cdUf`)
+    REFERENCES `tbsuf` (`cdUf`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

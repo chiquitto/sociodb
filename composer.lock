@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6d7048fa5e240bd84870e4bcffb870b3",
-    "content-hash": "1240e38bbd89683910a95fdf3f94f999",
+    "hash": "53b564b71b2b5971d4858c6be4cbc898",
+    "content-hash": "b3f5df5cb39a0bf2945b596be334ebab",
     "packages": [
         {
             "name": "league/climate",
-            "version": "dev-master",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/climate.git",
-                "reference": "fc0cc465fb32e47e36535b7a252ecf9268c94df9"
+                "reference": "b103fc8faa3780c802cc507d5f0ff534ecc94fb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/climate/zipball/fc0cc465fb32e47e36535b7a252ecf9268c94df9",
-                "reference": "fc0cc465fb32e47e36535b7a252ecf9268c94df9",
+                "url": "https://api.github.com/repos/thephpleague/climate/zipball/b103fc8faa3780c802cc507d5f0ff534ecc94fb5",
+                "reference": "b103fc8faa3780c802cc507d5f0ff534ecc94fb5",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "php",
                 "terminal"
             ],
-            "time": "2016-03-21 22:47:40"
+            "time": "2016-04-04 20:24:59"
         },
         {
             "name": "league/csv",
@@ -167,9 +167,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "league/climate": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

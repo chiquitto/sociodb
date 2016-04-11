@@ -1,7 +1,7 @@
 #! /usr/bin/php
 <?php
 
-require './config.php';
+require './vendor/autoload.php';
 
 \Chiquitto\Sociodb\Terminal::getInstance()->run();
 
