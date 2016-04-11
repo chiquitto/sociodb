@@ -60,7 +60,7 @@ class Conexao extends PDO
     private function loadFile()
     {
         if (self::$dsn === null) {
-            $content = file_get_contents(DB_CONFIG);
+            $content = file_get_contents(SOCIODB_DB_CONFIG);
             $data = json_decode($content);
 
             self::setConfig($data->dsn, $data->user, $data->pass);

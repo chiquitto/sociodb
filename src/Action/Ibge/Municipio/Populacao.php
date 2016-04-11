@@ -15,7 +15,7 @@ class Populacao extends ActionAbstract
 {
     public function process(array $params = array())
     {
-        $reader = Reader::createFromPath(PATH_DATA . '/ibge/estimativa_dou_2015_20150915.csv');
+        $reader = Reader::createFromPath(SOCIODB_PATH_DATA . '/ibge/estimativa_dou_2015_20150915.csv');
         $iterator = $reader->fetchAssoc(0);
         
         $sql = "UPDATE tbibge_municipio

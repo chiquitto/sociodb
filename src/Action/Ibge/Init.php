@@ -15,7 +15,7 @@ class Init extends ActionAbstract
 
     public function process(array $params = array())
     {
-        Conexao::getInstance()->execSqlFile(PATH_DATA . '/ibge/init.sql');
+        Conexao::getInstance()->execSqlFile(SOCIODB_PATH_DATA . '/ibge/init.sql');
     }
 
 }
