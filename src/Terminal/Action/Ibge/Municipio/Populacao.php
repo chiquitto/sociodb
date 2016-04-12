@@ -13,6 +13,6 @@ use Chiquitto\Sociodb\Terminal\Action\ActionAbstract;
 class Populacao extends ActionAbstract
 {
 
-    protected $action = Action::ACTION_IBGE_MUNICIPIO_POPULACAO;
+    protected $action = Action::ACTION_IBGE_MUNICIPIO_POPULACAO_2015;
 
 }

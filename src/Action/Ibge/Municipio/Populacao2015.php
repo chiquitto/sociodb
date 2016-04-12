@@ -11,7 +11,7 @@ use League\Csv\Reader;
  *
  * @author chiquitto
  */
-class Populacao extends ActionAbstract
+class Populacao2015 extends ActionAbstract
 {
     public function process(array $params = array())
     {
@@ -40,7 +40,7 @@ Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
             $st->execute();
         }
         
-        $sql = "Update tbibge_municipio Set vlDensidadeDemografica2015 = qtPopulacao2015/vlArea";
+        $sql = "Update tbibge_municipio Set vlDensidadeDemografica2015 = qtPopulacao2015/vlArea Where (NOT vlArea IS NULL)";
         $con->exec($sql);
         
         $sql = "Update tbibge_uf iu

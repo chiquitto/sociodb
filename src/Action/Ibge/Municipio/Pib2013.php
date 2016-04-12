@@ -4,14 +4,13 @@ namespace Chiquitto\Sociodb\Action\Ibge\Municipio;
 
 use Chiquitto\Sociodb\Action\ActionAbstract;
 use Chiquitto\Sociodb\Conexao;
-use Chiquitto\Sociodb\Terminal;
 
 /**
  * 
  *
  * @author chiquitto
  */
-class Pib extends ActionAbstract
+class Pib2013 extends ActionAbstract
 {
 
     private function parseLine($line)
@@ -47,6 +46,10 @@ class Pib extends ActionAbstract
         
         foreach ($content as $line) {
             $line = $this->parseLine($line);
+            
+            if ($line['nrAno'] != 2013) {
+                continue;
+            }
             
             $st->bindValue(':cdUf', $line['cdUf']);
             $st->bindValue(':cdMunicipio', $line['cdMunicipio']);
