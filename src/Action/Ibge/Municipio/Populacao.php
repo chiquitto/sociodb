@@ -19,7 +19,7 @@ class Populacao extends ActionAbstract
         $iterator = $reader->fetchAssoc(0);
         
         $sql = "UPDATE tbibge_municipio
-SET qtPopulacao = :qtPopulacao
+SET qtPopulacao2015 = :qtPopulacao
 Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
         
         $con = Conexao::getInstance();
@@ -40,8 +40,11 @@ Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
             $st->execute();
         }
         
+        $sql = "Update tbibge_municipio Set vlDensidadeDemografica2015 = qtPopulacao2015/vlArea";
+        $con->exec($sql);
+        
         $sql = "Update tbibge_uf iu
-Set iu.qtPopulacao = (Select Sum(im.qtPopulacao) From tbibge_municipio im Where (im.cdUf = iu.cdUf) Group By im.cdUf)";
+Set iu.qtPopulacao2015 = (Select Sum(im.qtPopulacao2015) From tbibge_municipio im Where (im.cdUf = iu.cdUf) Group By im.cdUf)";
         $con->exec($sql);
         
         $con->commit();

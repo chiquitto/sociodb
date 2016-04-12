@@ -12,7 +12,7 @@ use PDOException;
  *
  * @author chiquitto
  */
-class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
+class Area extends ActionAbstract
 {
     
     public function process(array $params = array())
@@ -28,7 +28,7 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
     {
         $cdUf = $uf['cdUf'];
         
-        $url = "http://www.cidades.ibge.gov.br/cartograma/getdata.php?coduf={$cdUf}&idtema=16&codv=V17&nfaixas=4";
+        $url = "http://www.cidades.ibge.gov.br/cartograma/getdata.php?coduf={$cdUf}&idtema=16&codv=V01&nfaixas=4";
         $content = file_get_contents($url);
 
         // @link http://stackoverflow.com/questions/6941642/php-json-decode-fails-without-quotes-on-key
@@ -40,7 +40,7 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
         $con = Conexao::getInstance();
 
         $sql = "Update tbibge_municipio
-            Set vlRendimentoMedioMensalUrbano2010 = :vlRendimentoMedioMensalUrbano
+            Set vlArea = :vlArea
             Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
         $stmt = $con->prepare($sql);
         $stmt->bindValue(':cdUf', $cdUf);
@@ -57,12 +57,12 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
             }
 
             $stmt->bindValue(':cdMunicipio', $cdMunicipio);
-            $stmt->bindValue(':vlRendimentoMedioMensalUrbano', (float) $municipio['v']);
+            $stmt->bindValue(':vlArea', (float) $municipio['v']);
 
             try {
                 $stmt->execute();
             } catch (PDOException $exc) {
-                echo "$cdMunicipioOriginal ($cdUf / $cdMunicipio) => ";
+                echo "$cdMunicipioOriginal ($cdUf / $cdMunicipio / $cdMunicipioDv) => ";
                 print_r($municipio);
                 echo $exc;
                 exit;

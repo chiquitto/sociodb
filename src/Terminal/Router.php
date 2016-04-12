@@ -39,6 +39,9 @@ class Router
             $terminal->error('Erro: ' . $exc->getMessage());
         }
         
+        if ($exception instanceof UndefinedActionException) {
+            $terminal->draw('404');
+        }
         if ($exception instanceof ArgumentsParseException) {
             $terminal->usage();
         }

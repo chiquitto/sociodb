@@ -12,6 +12,7 @@ Conexao::setConfig("mysql:host=localhost;dbname=sociodb", 'root', '123456');
 Sociodb::getActionInstance(Action::ACTION_BD_PREPARE, array())->process();
 Sociodb::getActionInstance(Action::ACTION_BD_DATA, array())->process();
 Sociodb::getActionInstance(Action::ACTION_IBGE_INIT, array())->process();
+Sociodb::getActionInstance(Action::ACTION_IBGE_MUNICIPIO_AREA, array())->process();
 Sociodb::getActionInstance(Action::ACTION_IBGE_MUNICIPIO_POPULACAO, array())->process();
 Sociodb::getActionInstance(Action::ACTION_IBGE_CENSO2010_TRABALHO_RENDIMENTO_2_1, array())->process();
 Sociodb::getActionInstance(Action::ACTION_IBGE_MUNICIPIO_PIB, array())->process();
