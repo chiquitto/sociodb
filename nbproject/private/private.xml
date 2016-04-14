@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/chiquitto/Trabalho/sociodb/data/ibge/censo2010/trabalho-rendimento/README</file>
-            <file>file:/home/chiquitto/Trabalho/sociodb/src/Action.php</file>
+            <file>file:/home/chiquitto/Trabalho/sociodb/test.php</file>
+            <file>file:/home/chiquitto/Trabalho/sociodb/src/Terminal/Router.php</file>
+            <file>file:/home/chiquitto/Trabalho/sociodb/src/Action/Ibge/Municipio/Area.php</file>
         </group>
     </open-files>
 </project-private>

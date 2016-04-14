@@ -2,6 +2,8 @@
 
 namespace Chiquitto\Sociodb;
 
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 use PDO;
 use PDOException;
 
@@ -33,9 +35,36 @@ class Conexao extends PDO
         }
     }
     
+    /**
+     * 
+     * @return \Doctrine\DBAL\Connection
+     */
+    public function getDoctrineConection()
+    {
+        $config = new Configuration();
+        $connectionParams = array(
+            'dbname' => $this->getDsnValue('dbname'),
+            'user' => $this->getUser(),
+            'password' => $this->getPassword(),
+            'host' => $this->getDsnValue('host'),
+            'driver' => 'pdo_mysql',
+        );
+        return DriverManager::getConnection($connectionParams, $config);
+    }
+    
     public function getDsnValue($key)
     {
         return self::$dsnValues[$key];
+    }
+    
+    public function getPassword()
+    {
+        return self::$password;
+    }
+    
+    public function getUser()
+    {
+        return self::$user;
     }
 
     public static function setConfig($dsn, $user, $password)
