@@ -5,8 +5,8 @@ namespace Chiquitto\Sociodb\Action\Ibge\Municipio;
 use Chiquitto\Sociodb\Action\ActionAbstract;
 use Chiquitto\Sociodb\Conexao;
 use Chiquitto\Sociodb\Schema\TbibgeMunicipio;
+use Doctrine\DBAL\Types\Type;
 use PDO;
-use PDOException;
 
 /**
  * 
@@ -28,9 +28,12 @@ class Area extends ActionAbstract
     public function process(array $params = array())
     {
         $this->database();
-
-        $conn = Conexao::getInstance()->getDoctrine()->getWrappedConnection();
+        
+        $conn = Conexao::getInstance()->getDoctrine();
         $ufRowset = $conn->query('SELECT cdUf, stSigla From tbsuf');
+        
+        $sql = "Update tbibge_municipio Set vlArea = 0";
+        $conn->query($sql);
 
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow);
@@ -50,21 +53,15 @@ class Area extends ActionAbstract
 
         $json = json_decode($content, 1);
 
-        $pdo = Conexao::getInstance()->getDoctrine()->getWrappedConnection();
+        $conn = Conexao::getInstance()->getDoctrine();
         
-        $pdo->beginTransaction();
-        
-        $sql = "Update tbibge_municipio Set vlArea = 0";
-        $pdo->query($sql);
-
         $sql = "Update tbibge_municipio
             Set vlArea = :vlArea
             Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':cdUf', $cdUf);
-
+        $stmt = $conn->prepare($sql);
+        
         foreach ($json['municipios'] as $cdMunicipio => $municipio) {
-            $cdMunicipioOriginal = $cdMunicipio;
+            // $cdMunicipioOriginal = $cdMunicipio;
             $cdMunicipio = (int) substr($cdMunicipio, 2);
 
             $municipio['v'] = (float) $municipio['v'];
@@ -72,20 +69,14 @@ class Area extends ActionAbstract
                 $municipio['v'] = null;
             }
 
-            $stmt->bindValue(':cdMunicipio', $cdMunicipio);
-            $stmt->bindValue(':vlArea', (float) $municipio['v']);
+            $stmt->bindValue(':cdUf', (int) $cdUf, Type::INTEGER);
+            $stmt->bindValue(':cdMunicipio', $cdMunicipio, Type::INTEGER);
+            $stmt->bindValue(':vlArea', (float) $municipio['v'], Type::DECIMAL);
 
-            try {
-                $stmt->execute();
-            } catch (PDOException $exc) {
-                echo "$cdMunicipioOriginal ($cdUf / $cdMunicipio) => ";
-                print_r($municipio);
-                echo $exc;
-                exit;
-            }
+            $stmt->execute();
         }
-
-        $pdo->commit();
+        
+        $conn->commit();
     }
 
 }

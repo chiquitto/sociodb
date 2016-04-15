@@ -4,7 +4,6 @@ namespace Chiquitto\Sociodb\Schema;
 
 use Chiquitto\Sociodb\Conexao;
 use Doctrine\DBAL\Schema\Column;
-use Doctrine\DBAL\Schema\Comparator;
 use Doctrine\DBAL\Schema\TableDiff;
 
 /**
@@ -20,7 +19,7 @@ abstract class AbstractTable
     protected function addColumn(Column $column)
     {
         $conn = Conexao::getInstance()->getDoctrine();
-
+        
         $schema = $conn->getSchemaManager();
         $tbibgeMunicipio = $schema->listTableDetails($this->getTableName());
 

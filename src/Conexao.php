@@ -3,6 +3,8 @@
 namespace Chiquitto\Sociodb;
 
 use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Doctrine\DBAL\DriverManager;
 
 /**
@@ -60,12 +62,15 @@ class Conexao
 
     /**
      * 
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function getDoctrine()
     {
         if ($this->doctrine === null) {
             $config = new Configuration();
+            $config->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
+            $config->setAutoCommit(false);
+            
             $connectionParams = array(
                 'dbname' => self::getConfigDbname(),
                 'user' => self::getConfigUser(),
@@ -88,6 +93,15 @@ class Conexao
             self::$instancia = new Conexao();
         }
         return self::$instancia;
+    }
+    
+    /**
+     * 
+     * @return PDOConnection
+     */
+    public function getPdo()
+    {
+        return $this->getDoctrine()->getWrappedConnection();
     }
 
     private function loadFile()

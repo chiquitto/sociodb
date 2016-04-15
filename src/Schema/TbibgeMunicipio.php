@@ -15,11 +15,24 @@ class TbibgeMunicipio extends AbstractTable
 
     protected $tableName = 'tbibge_municipio';
 
+    public function qtPopulacao2015Column()
+    {
+        $this->addColumn(new Column('qtPopulacao2015', Type::getType(Type::INTEGER)));
+    }
+
     public function vlAreaColumn()
     {
-        $this->addColumn(new Column('vlArea', Type::getType(Type::STRING), [
+        $this->addColumn(new Column('vlArea', Type::getType(Type::DECIMAL), [
             'precision' => 9,
             'scale' => 3
+        ]));
+    }
+
+    public function vlDensidadeDemografica2015Column()
+    {
+        $this->addColumn(new Column('vlDensidadeDemografica2015', Type::getType(Type::DECIMAL), [
+            'precision' => 7,
+            'scale' => 2
         ]));
     }
 
