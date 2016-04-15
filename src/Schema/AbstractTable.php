@@ -19,7 +19,7 @@ abstract class AbstractTable
 
     protected function addColumn(Column $column)
     {
-        $conn = Conexao::getInstance()->getDoctrineConection();
+        $conn = Conexao::getInstance()->getDoctrine();
 
         $schema = $conn->getSchemaManager();
         $tbibgeMunicipio = $schema->listTableDetails($this->getTableName());

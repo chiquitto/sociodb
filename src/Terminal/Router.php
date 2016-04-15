@@ -62,7 +62,7 @@ class Router
         $actionInstance = new $actionClass;
         $actionInstance->arguments();
         
-        if ($terminal->arguments->defined('help')) {
+        if ($terminal->arguments->get('help')) {
             $terminal->usage();
             return;
         }

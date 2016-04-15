@@ -17,7 +17,7 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
     
     public function process(array $params = array())
     {
-        $ufRowset = Conexao::getInstance()->query('SELECT cdUf, stSigla From tbsuf');
+        $ufRowset = Conexao::getDoctrine()->query('SELECT cdUf, stSigla From tbsuf');
         
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow);
@@ -37,7 +37,7 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
 
         $json = json_decode($content, 1);
         
-        $con = Conexao::getInstance();
+        $con = Conexao::getDoctrine();
 
         $sql = "Update tbibge_municipio
             Set vlRendimentoMedioMensalUrbano2010 = :vlRendimentoMedioMensalUrbano

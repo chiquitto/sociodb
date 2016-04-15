@@ -29,7 +29,8 @@ class Area extends ActionAbstract
     {
         $this->database();
 
-        $ufRowset = Conexao::getInstance()->query('SELECT cdUf, stSigla From tbsuf');
+        $conn = Conexao::getInstance()->getDoctrine()->getWrappedConnection();
+        $ufRowset = $conn->query('SELECT cdUf, stSigla From tbsuf');
 
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow);
@@ -49,15 +50,18 @@ class Area extends ActionAbstract
 
         $json = json_decode($content, 1);
 
-        $con = Conexao::getInstance();
+        $pdo = Conexao::getInstance()->getDoctrine()->getWrappedConnection();
+        
+        $pdo->beginTransaction();
+        
+        $sql = "Update tbibge_municipio Set vlArea = 0";
+        $pdo->query($sql);
 
         $sql = "Update tbibge_municipio
             Set vlArea = :vlArea
             Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
-        $stmt = $con->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':cdUf', $cdUf);
-
-        $con->beginTransaction();
 
         foreach ($json['municipios'] as $cdMunicipio => $municipio) {
             $cdMunicipioOriginal = $cdMunicipio;
@@ -81,7 +85,7 @@ class Area extends ActionAbstract
             }
         }
 
-        $con->commit();
+        $pdo->commit();
     }
 
 }

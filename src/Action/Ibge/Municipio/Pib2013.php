@@ -36,7 +36,7 @@ class Pib2013 extends ActionAbstract
         $sql = "INSERT INTO tbibge_pib_municipio (cdUf, cdMunicipio, nrAno, vlPib, qtPopulacao, vlPibCapita)
             VALUES (:cdUf, :cdMunicipio, :nrAno, :vlPib, :qtPopulacao, :vlPibCapita)";
 
-        $con = Conexao::getInstance();
+        $con = Conexao::getDoctrine();
 
         $con->exec('Delete From tbibge_pib_municipio');
 

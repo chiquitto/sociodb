@@ -16,9 +16,10 @@ class Config extends ActionAbstract
     public function process(array $params = [])
     {
         $content = [
-            'dsn' => $params['dsn'],
+            'host' => $params['host'],
             'user' => $params['user'],
-            'pass' => $params['password']
+            'password' => $params['password'],
+            'dbname' => $params['dbname'],
         ];
         
         if (!is_dir(SOCIODB_PATH_TMP)) {

@@ -22,7 +22,7 @@ class Populacao2015 extends ActionAbstract
 SET qtPopulacao2015 = :qtPopulacao
 Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
         
-        $con = Conexao::getInstance();
+        $con = Conexao::getDoctrine();
         $st = $con->prepare($sql);
         
         $con->beginTransaction();

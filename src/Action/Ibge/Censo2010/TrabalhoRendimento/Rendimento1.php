@@ -15,9 +15,9 @@ class Rendimento1 extends ActionAbstract
 {
     public function process(array $params = array())
     {
-        Conexao::getInstance()->exec('Delete From tbibge_censo_rendimento');
+        Conexao::getDoctrine()->exec('Delete From tbibge_censo_rendimento');
         
-        $ufRowset = Conexao::getInstance()->query('SELECT cdUf From tbsuf');
+        $ufRowset = Conexao::getDoctrine()->query('SELECT cdUf From tbsuf');
 
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow['cdUf']);
@@ -34,7 +34,7 @@ class Rendimento1 extends ActionAbstract
         
         $linhas = file($file);
 
-        $con = Conexao::getInstance();
+        $con = Conexao::getDoctrine();
         $con->beginTransaction();
 
         $sql = 'INSERT INTO `tbibge_censo_rendimento` (cdUf, cdMunicipio, semrenda, atemeio, entremeioe1, entre1e2, entre2e5, entre5e10, entre10e20, mais20) VALUES (:cdUf, :cdMunicipio, :semrenda, :atemeio, :entremeioe1, :entre1e2, :entre2e5, :entre5e10, :entre10e20, :mais20)';
