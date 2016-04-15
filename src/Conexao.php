@@ -68,7 +68,7 @@ class Conexao
     {
         if ($this->doctrine === null) {
             $config = new Configuration();
-            $config->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
+            //$config->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
             $config->setAutoCommit(false);
             
             $connectionParams = array(
