@@ -3,10 +3,10 @@ CREATE TABLE IF NOT EXISTS `tbibge_municipio` (
   `cdMunicipio` INT UNSIGNED NOT NULL,
   `cdMicroregiao` INT UNSIGNED NOT NULL,
   `cdMunicipioCompleto` INT UNSIGNED NOT NULL,
-  -- `vlArea` DECIMAL(9,3) NULL,
-  -- `qtPopulacao2015` INT NULL,
-  -- `vlDensidadeDemografica2015` DECIMAL(7,2) NULL,
-  -- `vlRendimentoMedioMensalUrbano2010` DECIMAL(10,2) NULL,
+  `vlArea` DECIMAL(9,3) NULL,
+  `qtPopulacao2015` INT NULL,
+  `vlDensidadeDemografica2015` DECIMAL(7,2) NULL,
+  `vlRendimentoMedioMensalUrbano2010` DECIMAL(10,2) NULL,
   INDEX `fk_tbsmunicipio_tbsmicroregiao1_idx` (`cdMicroregiao` ASC),
   UNIQUE INDEX `un_cdMunicipioCompleto` (`cdMunicipioCompleto` ASC),
   PRIMARY KEY (`cdUf`, `cdMunicipio`),
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `tbibge_municipio` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-/*CREATE TABLE IF NOT EXISTS `tbibge_censo_rendimento` (
+CREATE TABLE IF NOT EXISTS `tbibge_censo_rendimento` (
   `cdUf` INT UNSIGNED NOT NULL,
   `cdMunicipio` INT UNSIGNED NOT NULL,
   `semrenda` INT NOT NULL,
@@ -39,9 +39,9 @@ ENGINE = InnoDB;
     REFERENCES `tbsmunicipio` (`cdUf` , `cdMunicipio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;*/
+ENGINE = InnoDB;
 
-/*CREATE TABLE IF NOT EXISTS `tbibge_pib_municipio` (
+CREATE TABLE IF NOT EXISTS `tbibge_pib_municipio` (
   `cdUf` INT UNSIGNED NOT NULL,
   `cdMunicipio` INT UNSIGNED NOT NULL,
   `nrAno` YEAR NOT NULL,
@@ -54,11 +54,11 @@ ENGINE = InnoDB;*/
     REFERENCES `tbsmunicipio` (`cdUf` , `cdMunicipio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;*/
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `tbibge_uf` (
   `cdUf` INT UNSIGNED NOT NULL,
-  -- `qtPopulacao2015` INT NULL,
+  `qtPopulacao2015` INT NULL,
   PRIMARY KEY (`cdUf`),
   CONSTRAINT `fk_tbibge_uf_tbsuf1`
     FOREIGN KEY (`cdUf`)
