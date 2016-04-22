@@ -20,6 +20,7 @@ class Action
     const ACTION_IBGE_MUNICIPIO_PIB_2013 = 'ibge-municipio-pib-2013';
     const ACTION_IBGE_MUNICIPIO_POPULACAO_2015 = 'ibge-municipio-populacao-2015';
     const ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO = 'ibge-municipio-rendimento-medio-mensal-domicio-urbano';
+    const ACTION_SEBRAESHOP_POTENCIAL_CONSUMO = 'sebraeshop-potencial-consumo';
     const ACTION_HELP = 'help';
 
     private static $actionClass = [
@@ -27,13 +28,14 @@ class Action
         self::ACTION_BD_CONFIG => 'Bd\\Config',
         self::ACTION_BD_DATA => 'Bd\\Data',
         self::ACTION_BD_PREPARE => 'Bd\\Prepare',
+        self::ACTION_HELP => 'Help',
         self::ACTION_IBGE_CENSO2010_TRABALHO_RENDIMENTO_2_1 => 'Ibge\\Censo2010\\TrabalhoRendimento\\Rendimento1',
         self::ACTION_IBGE_INIT => 'Ibge\\Init',
         self::ACTION_IBGE_MUNICIPIO_AREA => 'Ibge\\Municipio\\Area',
         self::ACTION_IBGE_MUNICIPIO_PIB_2013 => 'Ibge\\Municipio\\Pib2013',
         self::ACTION_IBGE_MUNICIPIO_POPULACAO_2015 => 'Ibge\\Municipio\\Populacao2015',
         self::ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO => 'Ibge\\Municipio\\RendimentoMedioMensalDomicilioUrbano',
-        self::ACTION_HELP => 'Help',
+        self::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO => 'Sebraeshop\\PotencialConsumo',
     ];
     private static $actionDescription = [
         self::ACTION_ACTIONS => 'Exibe a lista de ações',
@@ -46,6 +48,7 @@ class Action
         self::ACTION_IBGE_MUNICIPIO_PIB_2013 => 'Atualizar PIB por municipio (2013)',
         self::ACTION_IBGE_MUNICIPIO_POPULACAO_2015 => 'Atualizar população por municipio (IBGE)',
         self::ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO => 'Atualizar Valor do rendimento nominal médio mensal dos domicílios particulares permanentes com rendimento domiciliar, por situação do domicílio - Urbana (IBGE)',
+        self::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO => 'Atualização do Pontencial de Consumo de acordo com Sebraeshop',
     ];
     private static $actionAll = [
         self::ACTION_BD_DATA,
@@ -55,6 +58,7 @@ class Action
         self::ACTION_IBGE_MUNICIPIO_POPULACAO_2015,
         self::ACTION_IBGE_MUNICIPIO_PIB_2013,
         self::ACTION_IBGE_MUNICIPIO_RENDIMENTO_MEDIO_MENSAL_DOMICILIO_URBANO,
+        self::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO,
     ];
 
     public static function getActionClass($actionName = null)
