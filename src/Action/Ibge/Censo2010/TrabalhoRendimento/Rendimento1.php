@@ -15,9 +15,12 @@ class Rendimento1 extends ActionAbstract
 {
     public function process(array $params = array())
     {
-        Conexao::getInstance()->exec('Delete From tbibge_censo_rendimento');
+        $conn = Conexao::getInstance()->getDoctrine();
         
-        $ufRowset = Conexao::getInstance()->query('SELECT cdUf From tbsuf');
+        $conn->exec('Delete From tbibge_censo_rendimento');
+        
+        $conn = Conexao::getInstance()->getDoctrine();
+        $ufRowset = $conn->query('SELECT cdUf, stSigla From tbsuf');
 
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow['cdUf']);
@@ -34,11 +37,10 @@ class Rendimento1 extends ActionAbstract
         
         $linhas = file($file);
 
-        $con = Conexao::getInstance();
-        $con->beginTransaction();
+        $conn = Conexao::getInstance()->getDoctrine();
 
         $sql = 'INSERT INTO `tbibge_censo_rendimento` (cdUf, cdMunicipio, semrenda, atemeio, entremeioe1, entre1e2, entre2e5, entre5e10, entre10e20, mais20) VALUES (:cdUf, :cdMunicipio, :semrenda, :atemeio, :entremeioe1, :entre1e2, :entre2e5, :entre5e10, :entre10e20, :mais20)';
-        $prepared = $con->prepare($sql);
+        $st = $conn->prepare($sql);
 
         $inMunicipios = false;
         foreach ($linhas as $linha) {
@@ -69,7 +71,7 @@ class Rendimento1 extends ActionAbstract
             );
 
             try {
-                $prepared->execute($params);
+                $st->execute($params);
             } catch (PDOException $exc) {
                 print_r($params);
                 echo $sql, "\n";
@@ -78,7 +80,7 @@ class Rendimento1 extends ActionAbstract
             }
         }
 
-        $con->commit();
+        $conn->commit();
     }
     
     /**

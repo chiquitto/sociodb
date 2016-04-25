@@ -9,10 +9,9 @@ namespace Chiquitto\Sociodb\Action;
  */
 abstract class ActionAbstract
 {
-    
+
     /**
      * Define os argumentos da acao
      */
     abstract public function process(array $params = []);
-    
 }

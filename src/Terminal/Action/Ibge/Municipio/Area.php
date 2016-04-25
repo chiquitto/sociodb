@@ -10,9 +10,9 @@ use Chiquitto\Sociodb\Terminal\Action\ActionAbstract;
  *
  * @author chiquitto
  */
-class Populacao extends ActionAbstract
+class Area extends ActionAbstract
 {
 
-    protected $action = Action::ACTION_IBGE_MUNICIPIO_POPULACAO;
+    protected $action = Action::ACTION_IBGE_MUNICIPIO_AREA;
 
 }

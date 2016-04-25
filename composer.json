@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.4.0",
         "league/climate": "3.2.1",
-        "league/csv": "^8.0"
+        "league/csv": "^8.0",
+        "doctrine/dbal": "^2.5"
     },
     "autoload": {
         "psr-4": {

@@ -4,8 +4,6 @@ namespace Chiquitto\Sociodb\Action\Ibge\Municipio;
 
 use Chiquitto\Sociodb\Action\ActionAbstract;
 use Chiquitto\Sociodb\Conexao;
-use Chiquitto\Sociodb\Terminal;
-use League\CLImate\TerminalObject\Dynamic\Progress;
 use PDO;
 use PDOException;
 
@@ -16,11 +14,44 @@ use PDOException;
  */
 class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
 {
-    
+
+    private $tmpDirPath;
+    private $tmpFilePath;
+
+    private function loadFile($cdUf)
+    {
+        $filePath = strtr($this->tmpFilePath, [
+            '{UF}' => $cdUf
+        ]);
+
+        if (file_exists($filePath)) {
+            $content = file_get_contents($filePath);
+        } else {
+            $url = "http://www.cidades.ibge.gov.br/cartograma/getdata.php?coduf={$cdUf}&idtema=16&codv=V17&nfaixas=4";
+            $content = file_get_contents($url);
+
+            // @link http://stackoverflow.com/questions/6941642/php-json-decode-fails-without-quotes-on-key
+            // $content = str_replace(array('"', "'"), array('\"', '"'), $content);
+            $content = preg_replace('/(\w+):/i', '"\1":', $content);
+
+            if (!is_dir($this->tmpDirPath)) {
+                mkdir($this->tmpDirPath, 0777, true);
+            }
+
+            file_put_contents($filePath, $content);
+        }
+
+        return $content;
+    }
+
     public function process(array $params = array())
     {
-        $ufRowset = Conexao::getInstance()->query('SELECT cdUf, stSigla From tbsuf');
-        
+        $this->tmpDirPath = SOCIODB_PATH_TMP . '/ibge/cartograma/v17';
+        $this->tmpFilePath = $this->tmpDirPath . '/{UF}.json';
+
+        $conn = Conexao::getInstance()->getDoctrine();
+        $ufRowset = $conn->query('SELECT cdUf, stSigla From tbsuf');
+
         while ($ufRow = $ufRowset->fetch(PDO::FETCH_ASSOC)) {
             $this->processUf($ufRow);
         }
@@ -28,50 +59,42 @@ class RendimentoMedioMensalDomicilioUrbano extends ActionAbstract
 
     private function processUf($uf)
     {
-        $cdUf = $uf['cdUf'];
-        
-        $url = "http://www.cidades.ibge.gov.br/cartograma/getdata.php?coduf={$cdUf}&idtema=16&codv=V17&nfaixas=4";
-        $content = file_get_contents($url);
-
-        // @link http://stackoverflow.com/questions/6941642/php-json-decode-fails-without-quotes-on-key
-        // $content = str_replace(array('"', "'"), array('\"', '"'), $content);
-        $content = preg_replace('/(\w+):/i', '"\1":', $content);
+        $cdUf = (int) $uf['cdUf'];
+        $content = $this->loadFile($cdUf);
 
         $json = json_decode($content, 1);
-        
-        $con = Conexao::getInstance();
+
+        $conn = Conexao::getInstance()->getDoctrine();
 
         $sql = "Update tbibge_municipio
-            Set vlRendimentoMedioMensalUrbano = :vlRendimentoMedioMensalUrbano
+            Set vlRendimentoMedioMensalUrbano2010 = :vlRendimentoMedioMensalUrbano
             Where (cdUf = :cdUf) And (cdMunicipio = :cdMunicipio)";
-        $stmt = $con->prepare($sql);
-        $stmt->bindValue(':cdUf', $cdUf);
-        
-        $con->beginTransaction();
+        $stmt = $conn->prepare($sql);
 
         foreach ($json['municipios'] as $cdMunicipio => $municipio) {
             $cdMunicipioOriginal = $cdMunicipio;
             $cdMunicipio = (int) substr($cdMunicipio, 2);
-            
+
             $municipio['v'] = (float) $municipio['v'];
             if ($municipio['v'] == 0.0) {
                 $municipio['v'] = null;
             }
 
+            $stmt->bindValue(':cdUf', $cdUf);
             $stmt->bindValue(':cdMunicipio', $cdMunicipio);
             $stmt->bindValue(':vlRendimentoMedioMensalUrbano', (float) $municipio['v']);
 
             try {
                 $stmt->execute();
             } catch (PDOException $exc) {
-                echo "$cdMunicipioOriginal ($cdUf / $cdMunicipio / $cdMunicipioDv) => ";
+                echo "$cdMunicipioOriginal ($cdUf / $cdMunicipio) => ";
                 print_r($municipio);
                 echo $exc;
                 exit;
             }
         }
 
-        $con->commit();
+        $conn->commit();
     }
 
 }

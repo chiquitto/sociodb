@@ -11,7 +11,7 @@ use Chiquitto\Sociodb\Terminal\Action\ActionAbstract;
  * Description of Config
  *
  * @author chiquitto
- * @example ./sociodb.php bd-config -d "mysql:host=localhost;dbname=sociodb" -u root
+ * @example ./sociodb.php bd-config --host localhost -d sociodb -u root -p 123456 -d sociodb
  */
 class Config extends ActionAbstract
 {
@@ -20,10 +20,10 @@ class Config extends ActionAbstract
     {
         $terminal = Terminal::getInstance();
         $terminal->arguments->add([
-            'dsn' => [
-                'prefix' => 'd',
-                'longPrefix' => 'dsn',
-                'description' => 'DSN para a conexão',
+            'host' => [
+                //'prefix' => 'h',
+                'longPrefix' => 'host',
+                'description' => 'Host do banco de dados',
                 'required' => true,
             ],
             'user' => [
@@ -37,6 +37,12 @@ class Config extends ActionAbstract
                 'longPrefix' => 'password',
                 'description' => 'Senha para a conexão',
             ],
+            'dbname' => [
+                'prefix' => 'd',
+                'longPrefix' => 'dbname',
+                'description' => 'Nome do banco de dados',
+                'required' => true,
+            ],
         ]);
     }
 
@@ -45,10 +51,11 @@ class Config extends ActionAbstract
         $terminal = Terminal::getInstance();
         $args = $terminal->arguments->toArray();
 
-        Sociodb::getActionInstance(Action::ACTION_BD_CONFIG, array())->process([
-            'dsn' => $args['dsn'],
+        Sociodb::getActionInstance(Action::ACTION_BD_CONFIG, [])->process([
+            'host' => $args['host'],
             'user' => $args['user'],
-            'password' => $args['password']
+            'password' => $args['password'],
+            'dbname' => $args['dbname'],
         ]);
     }
 

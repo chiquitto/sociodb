@@ -4,14 +4,13 @@ namespace Chiquitto\Sociodb\Action\Ibge\Municipio;
 
 use Chiquitto\Sociodb\Action\ActionAbstract;
 use Chiquitto\Sociodb\Conexao;
-use Chiquitto\Sociodb\Terminal;
 
 /**
  * 
  *
  * @author chiquitto
  */
-class Pib extends ActionAbstract
+class Pib2013 extends ActionAbstract
 {
 
     private function parseLine($line)
@@ -37,16 +36,18 @@ class Pib extends ActionAbstract
         $sql = "INSERT INTO tbibge_pib_municipio (cdUf, cdMunicipio, nrAno, vlPib, qtPopulacao, vlPibCapita)
             VALUES (:cdUf, :cdMunicipio, :nrAno, :vlPib, :qtPopulacao, :vlPibCapita)";
 
-        $con = Conexao::getInstance();
+        $con = Conexao::getInstance()->getDoctrine();
 
         $con->exec('Delete From tbibge_pib_municipio');
 
         $st = $con->prepare($sql);
 
-        $con->beginTransaction();
-        
         foreach ($content as $line) {
             $line = $this->parseLine($line);
+            
+            if ($line['nrAno'] != 2013) {
+                continue;
+            }
             
             $st->bindValue(':cdUf', $line['cdUf']);
             $st->bindValue(':cdMunicipio', $line['cdMunicipio']);

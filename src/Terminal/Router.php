@@ -39,6 +39,9 @@ class Router
             $terminal->error('Erro: ' . $exc->getMessage());
         }
         
+        if ($exception instanceof UndefinedActionException) {
+            $terminal->draw('404');
+        }
         if ($exception instanceof ArgumentsParseException) {
             $terminal->usage();
         }
@@ -59,7 +62,7 @@ class Router
         $actionInstance = new $actionClass;
         $actionInstance->arguments();
         
-        if ($terminal->arguments->defined('help')) {
+        if ($terminal->arguments->get('help')) {
             $terminal->usage();
             return;
         }
