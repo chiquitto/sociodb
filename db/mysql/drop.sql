@@ -3,6 +3,9 @@ DROP TABLE IF EXISTS tbibge_pib_municipio;
 DROP TABLE IF EXISTS tbibge_censo_rendimento;
 DROP TABLE IF EXISTS tbibge_municipio;
 
+DROP TABLE IF EXISTS tbsebraeshop_uf;
+DROP TABLE IF EXISTS tbsebraeshop_uf_consumo;
+
 DROP TABLE IF EXISTS tbssubdistrito;
 DROP TABLE IF EXISTS tbsdistrito;
 DROP TABLE IF EXISTS tbsmunicipio;
