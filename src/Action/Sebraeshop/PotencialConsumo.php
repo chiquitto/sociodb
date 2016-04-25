@@ -4,6 +4,7 @@ namespace Chiquitto\Sociodb\Action\Sebraeshop;
 
 use Chiquitto\Sociodb\Action\ActionAbstract;
 use Chiquitto\Sociodb\Conexao;
+use Chiquitto\Sociodb\Sebraeshop\PotencialConsumo as SebraeshopPotencialConsumo;
 use DOMElement;
 use PDO;
 use Zend\Dom\Document;
@@ -19,29 +20,6 @@ use Zend\Dom\Document\Query;
  */
 class PotencialConsumo extends ActionAbstract
 {
-
-    const CATEGORIA_ALIMENTACAO_DOMICILIO = 'ALIMENTACAO_DOMICILIO';
-    const CATEGORIA_ALIMENTACAO_FORA_DOMICILIO = 'ALIMENTACAO_FORA_DOMICILIO';
-    const CATEGORIA_ARTIGOS_LIMPEZA = 'ARTIGOS_DE_LIMPEZA';
-    const CATEGORIA_BEBIDAS = 'BEBIDAS';
-    const CATEGORIA_CALCADOS = 'CALCADOS';
-    const CATEGORIA_EQUIPAMENTOS_ELETRONICOS = 'EQUIPAMENTOS_ELETRONICOS';
-    const CATEGORIA_FUMO = 'FUMO';
-    const CATEGORIA_HIGIENE_CUIDADOS_PESSOAIS = 'HIGIENE_CUIDADOS_PESSOAIS';
-    const CATEGORIA_LIVROS_MATERIAL_ESCOLAR = 'LIVROS_E_MATERIAL_ESCOLAR';
-    const CATEGORIA_MANUTENCAO_LAR = 'MANUTENCAO_DO_LAR';
-    const CATEGORIA_MATRICULAS_MENSALIDADES = 'MATRICULAS_E_MENSALIDADES';
-    const CATEGORIA_MEDICAMENTOS = 'MEDICAMENTOS';
-    const CATEGORIA_MOBILIARIOS_ARTIGOS_LAR = 'MOBILIARIOS_ARTIGOS_DO_LAR';
-    const CATEGORIA_OUTRAS_DESPESAS = 'OUTRAS_DESPESAS';
-    const CATEGORIA_OUTRAS_DESPESAS_VESTUARIO = 'OUTRAS_DESPESAS_DE_VESTUARIO';
-    const CATEGORIA_OUTRAS_DESPESAS_SAUDE = 'OUTRAS_DESPESAS_DE_SAUDE';
-    const CATEGORIA_RECREACAO_CULTURA = 'RECREACAO_E_CULTURA';
-    const CATEGORIA_TOTAL_URBANO = 'TOTAL_URBANO';
-    const CATEGORIA_TRANSPORTES_URBANOS = 'TRANSPORTES_URBANOS';
-    const CATEGORIA_VEICULO_PROPRIO = 'VEICULO_PROPRIO';
-    const CATEGORIA_VESTUARIO_CONFECCIONADO = 'VESTUARIO_CONFECCIONADO';
-    const CATEGORIA_VIAGENS = 'VIAGENS';
 
     private $assoc = [
         11 => 'http://www.sebraeshop.com.br/potencial_consumo/Detalhes.aspx?cod=3BQApNgEfZM=&uf=08w9pSZvzTo=',
@@ -79,30 +57,31 @@ class PotencialConsumo extends ActionAbstract
      */
     private $domDocument;
     private $mapaCategorias = [
-        self::ALIMENTACAO_DOMICILIO => ['TOTAL' => 19, 'a1' => 20, 'a2' => 21, 'b1' => 22, 'b2' => 23, 'c1' => 24, 'c2' => 236, 'd' => 25, 'e' => 26],
-        self::ALIMENTACAO_FORA_DOMICILIO => ['TOTAL' => 27, 'a1' => 29, 'a2' => 30, 'b1' => 31, 'b2' => 32, 'c1' => 33, 'c2' => 237, 'd' => 34, 'e' => 28],
-        self::ARTIGOS_LIMPEZA => ['TOTAL' => 37, 'a1' => 38, 'a2' => 39, 'b1' => 40, 'b2' => 41, 'c1' => 42, 'c2' => 238, 'd' => 43, 'e' => 44],
-        self::BEBIDAS => ['TOTAL' => 46, 'a1' => 47, 'a2' => 48, 'b1' => 49, 'b2' => 50, 'c1' => 51, 'c2' => 239, 'd' => 52, 'e' => 53],
-        self::CALCADOS => ['TOTAL' => 54, 'a1' => 55, 'a2' => 56, 'b1' => 57, 'b2' => 58, 'c1' => 59, 'c2' => 240, 'd' => 60, 'e' => 61],
-        //self::DOMICILIO_URBANO => ['TOTAL' => 70, 'a1' => 71, 'a2' => 72, 'b1' => 73, 'b2' => 74, 'c1' => 75, 'c2' => 241, 'd' => 76, 'e' => 77],
-        self::EQUIPAMENTOS_ELETRONICOS => ['TOTAL' => 83, 'a1' => 84, 'a2' => 85, 'b1' => 86, 'b2' => 87, 'c1' => 88, 'c2' => 242, 'd' => 89, 'e' => 90],
-        self::FUMO => ['TOTAL' => 97, 'a1' => 98, 'a2' => 99, 'b1' => 100, 'b2' => 101, 'c1' => 102, 'c2' => 243, 'd' => 103, 'e' => 104],
-        self::HIGIENE_CUIDADOS_PESSOAIS => ['TOTAL' => 105, 'a1' => 106, 'a2' => 107, 'b1' => 108, 'b2' => 109, 'c1' => 110, 'c2' => 244, 'd' => 111, 'e' => 112],
-        self::LIVROS_MATERIAL_ESCOLAR => ['TOTAL' => 116, 'a1' => 117, 'a2' => 118, 'b1' => 119, 'b2' => 120, 'c1' => 121, 'c2' => 245, 'd' => 122, 'e' => 123],
-        self::MANUTENCAO_LAR => ['TOTAL' => 124, 'a1' => 125, 'a2' => 126, 'b1' => 127, 'b2' => 128, 'c1' => 129, 'c2' => 246, 'd' => 130, 'e' => 131],
-        self::MATRICULAS_MENSALIDADES => ['TOTAL' => 132, 'a1' => 133, 'a2' => 134, 'b1' => 135, 'b2' => 136, 'c1' => 137, 'c2' => 247, 'd' => 138, 'e' => 139],
-        self::MEDICAMENTOS => ['TOTAL' => 140, 'a1' => 141, 'a2' => 142, 'b1' => 143, 'b2' => 144, 'c1' => 145, 'c2' => 248, 'd' => 146, 'e' => 147],
-        self::MOBILIARIOS_ARTIGOS_LAR => ['TOTAL' => 148, 'a1' => 149, 'a2' => 150, 'b1' => 151, 'b2' => 152, 'c1' => 153, 'c2' => 249, 'd' => 154, 'e' => 155],
-        self::OUTRAS_DESPESAS => ['TOTAL' => 156, 'a1' => 157, 'a2' => 158, 'b1' => 159, 'b2' => 160, 'c1' => 161, 'c2' => 250, 'd' => 162, 'e' => 163],
-        self::OUTRAS_DESPESAS_VESTUARIO => ['TOTAL' => 164, 'a1' => 165, 'a2' => 166, 'b1' => 167, 'b2' => 168, 'c1' => 169, 'c2' => 251, 'd' => 170, 'e' => 171],
-        self::OUTRAS_DESPESAS_SAUDE => ['TOTAL' => 172, 'a1' => 173, 'a2' => 174, 'b1' => 175, 'b2' => 176, 'c1' => 177, 'c2' => 252, 'd' => 178, 'e' => 179],
-        self::RECREACAO_CULTURA => ['TOTAL' => 190, 'a1' => 183, 'a2' => 184, 'b1' => 185, 'b2' => 186, 'c1' => 187, 'c2' => 253, 'd' => 188, 'e' => 189],
-        // self::TOTAL_URBANO => ['TOTAL' => 193, 'a1' => 194, 'a2' => 195, 'b1' => 196, 'b2' => 197, 'c1' => 198, 'c2' => 254, 'd' => 199, 'e' => 200],
-        self::TRANSPORTES_URBANOS => ['TOTAL' => 201, 'a1' => 204, 'a2' => 205, 'b1' => 206, 'b2' => 207, 'c1' => 208, 'c2' => 255, 'd' => 209, 'e' => 210],
-        self::VEICULO_PROPRIO => ['TOTAL' => 212, 'a1' => 213, 'a2' => 214, 'b1' => 215, 'b2' => 216, 'c1' => 217, 'c2' => 256, 'd' => 218, 'e' => 219],
-        self::VESTUARIO_CONFECCIONADO => ['TOTAL' => 220, 'a1' => 221, 'a2' => 222, 'b1' => 223, 'b2' => 224, 'c1' => 225, 'c2' => 257, 'd' => 226, 'e' => 227],
-        self::VIAGENS => ['TOTAL' => 228, 'a1' => 229, 'a2' => 230, 'b1' => 231, 'b2' => 232, 'c1' => 233, 'c2' => 258, 'd' => 234, 'e' => 235]
+        SebraeshopPotencialConsumo::CATEGORIA_ALIMENTACAO_DOMICILIO => ['total' => 19, 'a1' => 20, 'a2' => 21, 'b1' => 22, 'b2' => 23, 'c1' => 24, 'c2' => 236, 'd' => 25, 'e' => 26],
+        SebraeshopPotencialConsumo::CATEGORIA_ALIMENTACAO_FORA_DOMICILIO => ['total' => 27, 'a1' => 29, 'a2' => 30, 'b1' => 31, 'b2' => 32, 'c1' => 33, 'c2' => 237, 'd' => 34, 'e' => 28],
+        SebraeshopPotencialConsumo::CATEGORIA_ARTIGOS_LIMPEZA => ['total' => 37, 'a1' => 38, 'a2' => 39, 'b1' => 40, 'b2' => 41, 'c1' => 42, 'c2' => 238, 'd' => 43, 'e' => 44],
+        SebraeshopPotencialConsumo::CATEGORIA_BEBIDAS => ['total' => 46, 'a1' => 47, 'a2' => 48, 'b1' => 49, 'b2' => 50, 'c1' => 51, 'c2' => 239, 'd' => 52, 'e' => 53],
+        SebraeshopPotencialConsumo::CATEGORIA_CALCADOS => ['total' => 54, 'a1' => 55, 'a2' => 56, 'b1' => 57, 'b2' => 58, 'c1' => 59, 'c2' => 240, 'd' => 60, 'e' => 61],
+        SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO => ['total' => 70, 'a1' => 71, 'a2' => 72, 'b1' => 73, 'b2' => 74, 'c1' => 75, 'c2' => 241, 'd' => 76, 'e' => 77],
+        SebraeshopPotencialConsumo::CATEGORIA_EQUIPAMENTOS_ELETRONICOS => ['total' => 83, 'a1' => 84, 'a2' => 85, 'b1' => 86, 'b2' => 87, 'c1' => 88, 'c2' => 242, 'd' => 89, 'e' => 90],
+        SebraeshopPotencialConsumo::CATEGORIA_FUMO => ['total' => 97, 'a1' => 98, 'a2' => 99, 'b1' => 100, 'b2' => 101, 'c1' => 102, 'c2' => 243, 'd' => 103, 'e' => 104],
+        SebraeshopPotencialConsumo::CATEGORIA_HIGIENE_CUIDADOS_PESSOAIS => ['total' => 105, 'a1' => 106, 'a2' => 107, 'b1' => 108, 'b2' => 109, 'c1' => 110, 'c2' => 244, 'd' => 111, 'e' => 112],
+        SebraeshopPotencialConsumo::CATEGORIA_LIVROS_MATERIAL_ESCOLAR => ['total' => 116, 'a1' => 117, 'a2' => 118, 'b1' => 119, 'b2' => 120, 'c1' => 121, 'c2' => 245, 'd' => 122, 'e' => 123],
+        SebraeshopPotencialConsumo::CATEGORIA_MANUTENCAO_LAR => ['total' => 124, 'a1' => 125, 'a2' => 126, 'b1' => 127, 'b2' => 128, 'c1' => 129, 'c2' => 246, 'd' => 130, 'e' => 131],
+        SebraeshopPotencialConsumo::CATEGORIA_MATRICULAS_MENSALIDADES => ['total' => 132, 'a1' => 133, 'a2' => 134, 'b1' => 135, 'b2' => 136, 'c1' => 137, 'c2' => 247, 'd' => 138, 'e' => 139],
+        SebraeshopPotencialConsumo::CATEGORIA_MEDICAMENTOS => ['total' => 140, 'a1' => 141, 'a2' => 142, 'b1' => 143, 'b2' => 144, 'c1' => 145, 'c2' => 248, 'd' => 146, 'e' => 147],
+        SebraeshopPotencialConsumo::CATEGORIA_MOBILIARIOS_ARTIGOS_LAR => ['total' => 148, 'a1' => 149, 'a2' => 150, 'b1' => 151, 'b2' => 152, 'c1' => 153, 'c2' => 249, 'd' => 154, 'e' => 155],
+        SebraeshopPotencialConsumo::CATEGORIA_OUTRAS_DESPESAS => ['total' => 156, 'a1' => 157, 'a2' => 158, 'b1' => 159, 'b2' => 160, 'c1' => 161, 'c2' => 250, 'd' => 162, 'e' => 163],
+        SebraeshopPotencialConsumo::CATEGORIA_OUTRAS_DESPESAS_VESTUARIO => ['total' => 164, 'a1' => 165, 'a2' => 166, 'b1' => 167, 'b2' => 168, 'c1' => 169, 'c2' => 251, 'd' => 170, 'e' => 171],
+        SebraeshopPotencialConsumo::CATEGORIA_OUTRAS_DESPESAS_SAUDE => ['total' => 172, 'a1' => 173, 'a2' => 174, 'b1' => 175, 'b2' => 176, 'c1' => 177, 'c2' => 252, 'd' => 178, 'e' => 179],
+        SebraeshopPotencialConsumo::CATEGORIA_RECREACAO_CULTURA => ['total' => 190, 'a1' => 183, 'a2' => 184, 'b1' => 185, 'b2' => 186, 'c1' => 187, 'c2' => 253, 'd' => 188, 'e' => 189],
+        SebraeshopPotencialConsumo::CATEGORIA_TOTAL_URBANO => ['total' => 193, 'a1' => 194, 'a2' => 195, 'b1' => 196, 'b2' => 197, 'c1' => 198, 'c2' => 254, 'd' => 199, 'e' => 200],
+        SebraeshopPotencialConsumo::CATEGORIA_TRANSPORTES_URBANOS => ['total' => 201, 'a1' => 204, 'a2' => 205, 'b1' => 206, 'b2' => 207, 'c1' => 208, 'c2' => 255, 'd' => 209, 'e' => 210],
+        SebraeshopPotencialConsumo::CATEGORIA_VEICULO_PROPRIO => ['total' => 212, 'a1' => 213, 'a2' => 214, 'b1' => 215, 'b2' => 216, 'c1' => 217, 'c2' => 256, 'd' => 218, 'e' => 219],
+        SebraeshopPotencialConsumo::CATEGORIA_VESTUARIO_CONFECCIONADO => ['total' => 220, 'a1' => 221, 'a2' => 222, 'b1' => 223, 'b2' => 224, 'c1' => 225, 'c2' => 257, 'd' => 226, 'e' => 227],
+        SebraeshopPotencialConsumo::CATEGORIA_VIAGENS => ['total' => 228, 'a1' => 229, 'a2' => 230, 'b1' => 231, 'b2' => 232, 'c1' => 233, 'c2' => 258, 'd' => 234, 'e' => 235]
     ];
+    private $nrAno = 2012;
     private $tmpDirPath;
     private $tmpFilePath;
 
@@ -130,6 +109,14 @@ class PotencialConsumo extends ActionAbstract
         }
 
         return $content;
+    }
+
+    private function normalizeNumber($number)
+    {
+        return (float) strtr($number, [
+                    '.' => '',
+                    ',' => '.'
+        ]);
     }
 
     public function process(array $params = array())
@@ -230,10 +217,7 @@ class PotencialConsumo extends ActionAbstract
             }
 
             if ($ok) {
-                $r[$varCategoria][$varClasse] = strtr($spanNode->textContent, [
-                        //'.' => '',
-                        //',' => '.'
-                ]);
+                $r[$varCategoria][$varClasse] = $this->normalizeNumber($spanNode->textContent);
             }
         }
 
@@ -252,22 +236,22 @@ class PotencialConsumo extends ActionAbstract
         foreach ($res as $key => $spanNode) {
             switch ($spanNode->attributes->getNamedItem('id')->value) {
                 case 'FormView1_Label3':
-                    $r['total'] = $spanNode->textContent;
+                    $r['total'] = $this->normalizeNumber($spanNode->textContent);
                     break;
                 case 'FormView1_Label4':
-                    $r['urbana'] = $spanNode->textContent;
+                    $r['urbana'] = $this->normalizeNumber($spanNode->textContent);
                     break;
                 case 'FormView1_Label5':
-                    $r['rural'] = $spanNode->textContent;
+                    $r['rural'] = $this->normalizeNumber($spanNode->textContent);
                     break;
                 case 'FormView1_Label6':
-                    $r['masculino'] = $spanNode->textContent;
+                    $r['masculino'] = $this->normalizeNumber($spanNode->textContent);
                     break;
                 case 'FormView1_Label7':
-                    $r['feminino'] = $spanNode->textContent;
+                    $r['feminino'] = $this->normalizeNumber($spanNode->textContent);
                     break;
                 case 'FormView1_Label15':
-                    $r['alfabetizada'] = $spanNode->textContent;
+                    $r['alfabetizada'] = $this->normalizeNumber($spanNode->textContent);
                     break;
 
                 default:
@@ -287,7 +271,65 @@ class PotencialConsumo extends ActionAbstract
         $r['pop'] = $this->processTableDomPopulacao();
         $r['categoria-consumo'] = $this->processTableDomCategoriaConsumo();
 
-        //die('<pre>' . __FILE__ . ' in line ' . __LINE__ . "\n" . print_r($r, TRUE));
+        $sqlDelete = "Delete From tbsebraeshop_uf Where (cdUf = :cdUf)";
+
+        $sqlInsert = "INSERT INTO tbsebraeshop_uf (cdUf, nrAno, qtPopulacao, qtDomiciliosTotal, qtDomiciliosA1, qtDomiciliosA2, qtDomiciliosB1, qtDomiciliosB2, qtDomiciliosC1, qtDomiciliosC2, qtDomiciliosD, qtDomiciliosE) VALUES (:cdUf, :nrAno, :qtPopulacao, :qtDomiciliosTotal, :qtDomiciliosA1, :qtDomiciliosA2, :qtDomiciliosB1, :qtDomiciliosB2, :qtDomiciliosC1, :qtDomiciliosC2, :qtDomiciliosD, :qtDomiciliosE)";
+
+        $conn = Conexao::getInstance()->getDoctrine();
+
+        $conn->executeQuery("Delete From tbsebraeshop_uf Where (cdUf = :cdUf)", array(
+            ':cdUf' => $cdUf,
+        ));
+
+        $conn->executeQuery("Delete From tbsebraeshop_uf_consumo Where (cdUf = :cdUf)", array(
+            ':cdUf' => $cdUf,
+        ));
+
+        $st = $conn->prepare($sqlInsert);
+        $st->bindValue(':cdUf', $cdUf);
+        $st->bindValue(':nrAno', $this->nrAno);
+        $st->bindValue(':qtPopulacao', $r['pop']['total']);
+        $st->bindValue(':qtDomiciliosTotal', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['total']);
+        $st->bindValue(':qtDomiciliosA1', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['a1']);
+        $st->bindValue(':qtDomiciliosA2', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['a2']);
+        $st->bindValue(':qtDomiciliosB1', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['b1']);
+        $st->bindValue(':qtDomiciliosB2', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['b2']);
+        $st->bindValue(':qtDomiciliosC1', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['c1']);
+        $st->bindValue(':qtDomiciliosC2', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['c2']);
+        $st->bindValue(':qtDomiciliosD', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['d']);
+        $st->bindValue(':qtDomiciliosE', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO]['e']);
+        $st->execute();
+        unset($st);
+
+        $sqlInsert = "INSERT INTO tbsebraeshop_uf_consumo
+            (cdUf, cdCategoria, nrAno, varTotal, varA1, varA2, varB1, varB2, varC1, varC2, varD, varE) VALUES
+            (:cdUf, :cdCategoria, :nrAno, :varTotal, :varA1, :varA2, :varB1, :varB2, :varC1, :varC2, :varD, :varE)";
+
+        foreach ($r['categoria-consumo'] as $cdCategoria => $categoriaConsumo) {
+            if ($cdCategoria == SebraeshopPotencialConsumo::CATEGORIA_DOMICILIO_URBANO) {
+                continue;
+            } elseif ($cdCategoria == SebraeshopPotencialConsumo::CATEGORIA_TOTAL_URBANO) {
+                continue;
+            }
+            
+            $st = $conn->prepare($sqlInsert);
+            $st->bindValue(':cdUf', $cdUf);
+            $st->bindValue(':cdCategoria', $cdCategoria);
+            $st->bindValue(':nrAno', $this->nrAno);
+            $st->bindValue(':varTotal', $categoriaConsumo['total']);
+            $st->bindValue(':varA1', $categoriaConsumo['a1']);
+            $st->bindValue(':varA2', $categoriaConsumo['a2']);
+            $st->bindValue(':varB1', $categoriaConsumo['b1']);
+            $st->bindValue(':varB2', $categoriaConsumo['b2']);
+            $st->bindValue(':varC1', $categoriaConsumo['c1']);
+            $st->bindValue(':varC2', $categoriaConsumo['c2']);
+            $st->bindValue(':varD', $categoriaConsumo['d']);
+            $st->bindValue(':varE', $categoriaConsumo['e']);
+            $st->execute();
+            unset($st);
+        }
+
+        $conn->commit();
     }
 
 }

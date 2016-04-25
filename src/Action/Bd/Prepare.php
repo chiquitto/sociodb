@@ -21,6 +21,7 @@ class Prepare extends ActionAbstract
         $con->execSqlFile(SOCIODB_PATH . '/db/mysql/drop.sql');
         $con->execSqlFile(SOCIODB_PATH . '/db/mysql/base.sql');
         $con->execSqlFile(SOCIODB_PATH . '/db/mysql/ibge.sql');
+        $con->execSqlFile(SOCIODB_PATH . '/db/mysql/sebraeshop.sql');
     }
 
 }
