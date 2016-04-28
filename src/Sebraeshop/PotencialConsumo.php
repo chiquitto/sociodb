@@ -51,7 +51,7 @@ class PotencialConsumo
      * @param string $classe
      * @return boolean
      */
-    public function validarClasse($classe)
+    public static function validarClasse($classe)
     {
         switch ($classe) {
             case self::CLASSE_A1:
