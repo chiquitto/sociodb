@@ -36,5 +36,36 @@ class PotencialConsumo
     const CATEGORIA_VIAGENS = 21;
     const CATEGORIA_DOMICILIO_URBANO = 22;
     const CATEGORIA_TOTAL_URBANO = 23;
+    const CLASSE_A1 = 'A1';
+    const CLASSE_A2 = 'A2';
+    const CLASSE_B1 = 'B1';
+    const CLASSE_B2 = 'B2';
+    const CLASSE_C1 = 'C1';
+    const CLASSE_C2 = 'C2';
+    const CLASSE_D = 'D';
+    const CLASSE_E = 'E';
+
+    /**
+     * Retorna true, se $classe é uma classe socioeconomica.
+     * 
+     * @param string $classe
+     * @return boolean
+     */
+    public function validarClasse($classe)
+    {
+        switch ($classe) {
+            case self::CLASSE_A1:
+            case self::CLASSE_A2:
+            case self::CLASSE_B1:
+            case self::CLASSE_B2:
+            case self::CLASSE_C1:
+            case self::CLASSE_C2:
+            case self::CLASSE_D:
+            case self::CLASSE_E:
+                return true;
+        }
+        
+        return false;
+    }
 
 }
