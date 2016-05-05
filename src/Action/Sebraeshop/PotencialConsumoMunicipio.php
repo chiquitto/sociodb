@@ -17,31 +17,33 @@ class PotencialConsumoMunicipio extends ActionAbstract
             ':nrAno' => 2015
         ));
         
+        return;
+        
         $sql = "INSERT INTO tbsebraeshop_municipio
-(cdUf, cdMunicipio, nrAno, qtPopulacao, qtDomiciliosTotal,
-qtDomiciliosA1, qtDomiciliosA2, qtDomiciliosB1, qtDomiciliosB2, qtDomiciliosC1, qtDomiciliosC2, qtDomiciliosD, qtDomiciliosE)
+(cdUf, cdMunicipio, nrAno, qtPopulacaoRural, qtPopulacaoUrbana, qtPopulacao, qtDomiciliosRuralTotal, qtDomiciliosUrbanaTotal, qtDomiciliosUrbanaA1, qtDomiciliosUrbanaA2, qtDomiciliosUrbanaB1, qtDomiciliosUrbanaB2, qtDomiciliosUrbanaC1, qtDomiciliosUrbanaC2, qtDomiciliosUrbanaD, qtDomiciliosUrbanaE)
 SELECT
-im.cdUf, im.cdMunicipio, 2015 nrAno,
+im.cdUf,
+im.cdMunicipio,
+2015,
+Round((ssuf.qtPopulacaoRural / ssuf.qtPopulacao) * im.qtPopulacao2015) qtPopulacaoRural,
+Round((ssuf.qtPopulacaoUrbana / ssuf.qtPopulacao) * im.qtPopulacao2015) qtPopulacaoUrbana,
 im.qtPopulacao2015 qtPopulacao,
-0 qtDomiciliosTotal,
-ROUND(ssuf.qtDomiciliosA1 * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosA1,
-ROUND(ssuf.qtDomiciliosA2 * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosA2,
-ROUND(ssuf.qtDomiciliosB1 * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosB1,
-ROUND(ssuf.qtDomiciliosB2 * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosB2,
-ROUND(ssuf.qtDomiciliosC1 * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosC1,
-ROUND(ssuf.qtDomiciliosC2 * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosC2,
-ROUND(ssuf.qtDomiciliosD  * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosD,
-ROUND(ssuf.qtDomiciliosE  * (im.qtPopulacao2015 / iu.qtPopulacao2015)) qtDomiciliosE
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosRuralTotal) qtDomiciliosRuralTotal,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaTotal) qtDomiciliosUrbanaTotal,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaA1) qtDomiciliosUrbanaA1,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaA2) qtDomiciliosUrbanaA2,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaB1) qtDomiciliosUrbanaB1,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaB2) qtDomiciliosUrbanaB2,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaC1) qtDomiciliosUrbanaC1,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaC2) qtDomiciliosUrbanaC2,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaD) qtDomiciliosUrbanaD,
+Round(im.qtPopulacao2015 / ssuf.qtPopulacao * ssuf.qtDomiciliosUrbanaE) qtDomiciliosUrbanaE
 FROM tbibge_municipio im
-Inner Join tbibge_uf iu On (iu.cdUf = im.cdUf)
 Inner Join tbsebraeshop_uf ssuf On (ssuf.cdUf = im.cdUf) And (ssuf.nrAno = :nrAno)";
         
         $conn->executeUpdate($sql, array(
             ':nrAno' => 2015
         ));
-        
-        $sql = "Update tbsebraeshop_municipio
-Set qtDomiciliosTotal = (qtDomiciliosA1 + qtDomiciliosA2 + qtDomiciliosB1 + qtDomiciliosB2 + qtDomiciliosC1 + qtDomiciliosC2 + qtDomiciliosD + qtDomiciliosE)";
         
         $conn->executeUpdate($sql, array());
         

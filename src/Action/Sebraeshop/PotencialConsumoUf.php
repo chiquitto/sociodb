@@ -158,13 +158,14 @@ Where (ssuf.nrAno = :nrAnoAntigo)";
             ':nrAnoAntigo' => $this->nrAno
         ));
         
-        // Atualizar Qtd de Domicilios 2015
+        // Atualizar Populacao Total e Qtd de Domicilios 2015
         $sql = "Update tbsebraeshop_uf ssuf1
 Inner Join tbsebraeshop_uf ssuf2
     On (ssuf2.cdUf = ssuf1.cdUf)
     And (ssuf1.nrAno = :nrAnoAntigo)
     And (ssuf2.nrAno = :nrAnoNovo)
 Set
+    ssuf2.qtPopulacao = (ssuf2.qtPopulacaoRural + ssuf2.qtPopulacaoUrbana),
     ssuf2.qtDomiciliosRuralTotal = Round(ssuf2.qtPopulacaoRural / ssuf1.qtPopulacaoRural * ssuf1.qtDomiciliosRuralTotal),
     -- ssuf2.qtDomiciliosUrbanaTotal = Round(ssuf2.qtPopulacaoUrbana / ssuf1.qtPopulacaoUrbana * ssuf1.qtDomiciliosUrbanaTotal),
     ssuf2.qtDomiciliosUrbanaA1 = Round(ssuf2.qtPopulacaoUrbana / ssuf1.qtPopulacaoUrbana * ssuf1.qtDomiciliosUrbanaA1),
@@ -392,7 +393,7 @@ Where (nrAno = :nrAnoNovo)";
 
         $sqlDelete = "Delete From tbsebraeshop_uf Where (cdUf = :cdUf)";
 
-        $sqlInsert = "INSERT INTO tbsebraeshop_uf (cdUf, nrAno, qtPopulacaoRural, qtPopulacaoUrbana, qtDomiciliosRuralTotal, qtDomiciliosUrbanaTotal, qtDomiciliosUrbanaA1, qtDomiciliosUrbanaA2, qtDomiciliosUrbanaB1, qtDomiciliosUrbanaB2, qtDomiciliosUrbanaC1, qtDomiciliosUrbanaC2, qtDomiciliosUrbanaD, qtDomiciliosUrbanaE) VALUES (:cdUf, :nrAno, :qtPopulacaoRural, :qtPopulacaoUrbana, :qtDomiciliosRuralTotal, :qtDomiciliosUrbanaTotal, :qtDomiciliosUrbanaA1, :qtDomiciliosUrbanaA2, :qtDomiciliosUrbanaB1, :qtDomiciliosUrbanaB2, :qtDomiciliosUrbanaC1, :qtDomiciliosUrbanaC2, :qtDomiciliosUrbanaD, :qtDomiciliosUrbanaE)";
+        $sqlInsert = "INSERT INTO tbsebraeshop_uf (cdUf, nrAno, qtPopulacaoRural, qtPopulacaoUrbana, qtPopulacao, qtDomiciliosRuralTotal, qtDomiciliosUrbanaTotal, qtDomiciliosUrbanaA1, qtDomiciliosUrbanaA2, qtDomiciliosUrbanaB1, qtDomiciliosUrbanaB2, qtDomiciliosUrbanaC1, qtDomiciliosUrbanaC2, qtDomiciliosUrbanaD, qtDomiciliosUrbanaE) VALUES (:cdUf, :nrAno, :qtPopulacaoRural, :qtPopulacaoUrbana, :qtPopulacao, :qtDomiciliosRuralTotal, :qtDomiciliosUrbanaTotal, :qtDomiciliosUrbanaA1, :qtDomiciliosUrbanaA2, :qtDomiciliosUrbanaB1, :qtDomiciliosUrbanaB2, :qtDomiciliosUrbanaC1, :qtDomiciliosUrbanaC2, :qtDomiciliosUrbanaD, :qtDomiciliosUrbanaE)";
 
         $conn = Conexao::getInstance()->getDoctrine();
 
@@ -409,6 +410,7 @@ Where (nrAno = :nrAnoNovo)";
         $st->bindValue(':nrAno', $this->nrAno);
         $st->bindValue(':qtPopulacaoRural', $r['pop']['rural']);
         $st->bindValue(':qtPopulacaoUrbana', $r['pop']['urbana']);
+        $st->bindValue(':qtPopulacao', $r['pop']['total']);
         $st->bindValue(':qtDomiciliosRuralTotal', $r['geral']['domicilios-rural']);
         $st->bindValue(':qtDomiciliosUrbanaTotal', $r['geral']['domicilios-urbana']);
         // $st->bindValue(':qtDomiciliosTotal', $r['categoria-consumo'][SebraeshopPotencialConsumo::CATEGORY_DOMICILIO_URBANO]['total']);
