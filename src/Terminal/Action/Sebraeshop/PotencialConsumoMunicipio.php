@@ -10,9 +10,9 @@ use Chiquitto\Sociodb\Terminal\Action\ActionAbstract;
  *
  * @author chiquitto
  */
-class PotencialConsumo extends ActionAbstract
+class PotencialConsumoMunicipio extends ActionAbstract
 {
 
-    protected $action = Action::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO;
+    protected $action = Action::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO_MUNICIPIO;
 
 }
