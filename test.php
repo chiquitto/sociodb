@@ -22,10 +22,6 @@ function process($action, $options = []) {
     echo "{$final} s\n";
 }
 
-process(Action::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO_UF);
-process(Action::ACTION_SEBRAESHOP_POTENCIAL_CONSUMO_MUNICIPIO);
-exit;
-
 process(Action::ACTION_BD_PREPARE);
 process(Action::ACTION_BD_DATA);
 process(Action::ACTION_IBGE_INIT);

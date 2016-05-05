@@ -17,6 +17,27 @@ use Zend\Dom\Document\Query;
  * 
  * Esta base contempla o consumo das populações urbanas e rurais, com análise individual de 21 categorias de consumo, classificadas por classe econômica de A a E. Traz, também, dados demográficos de todos os municípios do Brasil.
  * As informações foram atualizadas para 2012, detalhadas para todos os municípios. Com essas informações as empresas e candidatos a empreendedores dispõem de subsídios para embasar os seus planejamentos, seja na área comercial, de serviços ou outras áreas em que se façam necessárias. Contém ainda um ranking dos municípios brasileiros segundo o seu Potencial de Consumo.
+ * 
+ * SQL para verificacao de tbsebraeshop_uf
+ * SELECT 
+    uf.cduf,
+    uf.qtPopulacao2015 qtPopulacaoIbge,
+    ssuf.qtPopulacaoRural,
+    ssuf.qtPopulacaoUrbana,
+    ssuf.qtPopulacao,
+    ssuf.qtDomiciliosRuralTotal,
+    ssuf.qtDomiciliosUrbanaTotal,
+    ssuf.qtDomiciliosUrbanaA1,
+    ssuf.qtDomiciliosUrbanaA2,
+    ssuf.qtDomiciliosUrbanaB1,
+    ssuf.qtDomiciliosUrbanaB2,
+    ssuf.qtDomiciliosUrbanaC1,
+    ssuf.qtDomiciliosUrbanaC2,
+    ssuf.qtDomiciliosUrbanaD,
+    ssuf.qtDomiciliosUrbanaE
+FROM tbibge_uf uf
+INNER JOIN tbsebraeshop_uf ssuf ON (ssuf.cdUf = uf.cdUf)
+;
  */
 class PotencialConsumoUf extends ActionAbstract
 {
