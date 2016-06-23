@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `tbssubdistrito` (
   `cdMunicipio` INT UNSIGNED NOT NULL,
   `cdDistrito` INT UNSIGNED NOT NULL,
   `cdSubdistrito` INT UNSIGNED NOT NULL,
-  `stSubdistrito` VARCHAR(45) NOT NULL,
+  `stSubdistrito` VARCHAR(75) NOT NULL,
   PRIMARY KEY (`cdUf`, `cdMunicipio`, `cdDistrito`, `cdSubdistrito`),
   INDEX `fk_tbssubdistrito_tbsdistrito1_idx` (`cdUf` ASC, `cdMunicipio` ASC, `cdDistrito` ASC),
   CONSTRAINT `fk_tbssubdistrito_tbsdistrito1`

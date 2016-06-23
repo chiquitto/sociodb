@@ -72,7 +72,7 @@ class Rendimento1 extends ActionAbstract
 
             try {
                 $st->execute($params);
-            } catch (PDOException $exc) {
+            } catch (\Exception $exc) {
                 print_r($params);
                 echo $sql, "\n";
                 echo $exc;
@@ -117,7 +117,7 @@ class Rendimento1 extends ActionAbstract
 
     private function processarNumero($n)
     {
-        return strtr(trim($n), array(
+        return (int) strtr(trim($n), array(
             ' ' => ''
         ));
     }
