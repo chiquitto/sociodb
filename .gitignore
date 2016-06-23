@@ -3,3 +3,5 @@
 /vendor/
 /saida.txt
 /nbproject
+.idea/workspace.xml
+.idea/sociodb.iml
